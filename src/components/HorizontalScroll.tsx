@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import CottonOverlay from './CottonOverlay';
+import WeatheredOverlay from './WeatheredOverlay';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -66,14 +68,22 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative w-screen h-screen overflow-hidden ${className}`}
+      className={`relative w-screen h-screen overflow-hidden flex items-center justify-center ${className}`}
     >
+      {/* 舞台 84vh 垂直居中，上下留黑 = 电影感；min-w-0 防止被内部宽内容撑开导致只显示第一屏 */}
       <div
-        ref={wrapperRef}
-        className="flex h-full will-change-transform"
-        style={{ width: 'max-content' }}
+        className="relative w-full min-w-0 overflow-hidden shrink-0"
+        style={{ height: '84vh' }}
       >
-        {children}
+        <div
+          ref={wrapperRef}
+          className="relative flex h-full will-change-transform"
+          style={{ width: 'max-content' }}
+        >
+          {children}
+          <CottonOverlay />
+          <WeatheredOverlay />
+        </div>
       </div>
     </div>
   );
