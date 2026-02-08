@@ -9,6 +9,7 @@ gsap.registerPlugin(ScrollTrigger);
 const BOAT_LEFT_STABLE = 40; // vw
 const BOAT_EXIT_START_PROGRESS = 0.9; // 滚动进度超过此值时开始右移出
 const BOAT_WIDTH_PX = 240;
+const AUTO_SCROLL_DURATION = 80;
 
 interface BoatProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -19,6 +20,9 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
   const boatRef = useRef<HTMLDivElement>(null);
   const hasEnteredRef = useRef(false);
   const entranceRef = useRef<gsap.core.Tween | null>(null);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
+  const autoScrollTweenRef = useRef<gsap.core.Tween | null>(null);
+  const shouldAutoScrollWhenEntranceDoneRef = useRef(false);
 
   useEffect(() => {
     const boat = boatRef.current;
@@ -33,24 +37,49 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       return Math.max(0, contentWidth - viewportWidth);
     };
 
-    // 小船在 contentRef 内用 absolute，通过 left = 视口目标(40vw) + 已滚动距离 补偿父级 translateX，从而在视口中保持不动
     const viewportW = window.innerWidth;
     const stableLeftPx = (BOAT_LEFT_STABLE / 100) * viewportW;
 
-    gsap.set(boat, { left: -0.3 * viewportW, bottom: '25vh' }); // 初始在左侧外
+    const startAutoScroll = () => {
+      const st = scrollTriggerRef.current;
+      if (!st) return;
+      autoScrollTweenRef.current?.kill();
+      const startScroll = st.start;
+      const endScroll = st.end;
+      window.scrollTo({ top: startScroll, behavior: 'auto' });
+      const proxy = { y: startScroll };
+      const tween = gsap.to(proxy, {
+        y: endScroll,
+        duration: AUTO_SCROLL_DURATION,
+        ease: 'none',
+        onUpdate: () => {
+          window.scrollTo({ top: proxy.y, behavior: 'auto' });
+        },
+      });
+      autoScrollTweenRef.current = tween;
+    };
 
-    // 入场：从左到 40vw（即 stableLeftPx），只播一次；可被用户滚动中断
-    const entrance = gsap.to(boat, {
-      left: stableLeftPx,
-      duration: 2.2,
-      ease: 'power2.out',
-      onComplete: () => {
-        hasEnteredRef.current = true;
-      },
-    });
-    entranceRef.current = entrance;
+    const createEntrance = () => {
+      entranceRef.current?.kill();
+      gsap.set(boat, { left: -0.3 * viewportW });
+      const entrance = gsap.to(boat, {
+        left: stableLeftPx,
+        duration: 2.2,
+        ease: 'power2.out',
+        onComplete: () => {
+          hasEnteredRef.current = true;
+          if (shouldAutoScrollWhenEntranceDoneRef.current) {
+            shouldAutoScrollWhenEntranceDoneRef.current = false;
+            startAutoScroll();
+          }
+        },
+      });
+      entranceRef.current = entrance;
+    };
 
-    // 晃晃悠悠：循环摇摆，从挂载就开始（绕底部中心左右 ±3°、上下 ±4px）
+    gsap.set(boat, { left: -0.3 * viewportW, bottom: '25vh' });
+    createEntrance();
+
     const sway = gsap.fromTo(
       boat,
       { rotation: -3, y: -4, transformOrigin: '50% 100%' },
@@ -61,16 +90,14 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-      }
+      },
     );
 
-    // 与横向滚动同步：用户滚动可中断入场，并立即由滚动驱动位置，保持运动连续
     const st = ScrollTrigger.create({
       trigger: container,
       start: 'top top',
       end: () => `+=${getScrollWidth()}`,
       onUpdate: (self) => {
-        // 用户发生滚动时中断入场，交由滚动驱动
         if (!hasEnteredRef.current && self.direction !== 0) {
           entranceRef.current?.kill();
           entranceRef.current = null;
@@ -85,17 +112,43 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
         if (p < BOAT_EXIT_START_PROGRESS) {
           gsap.set(boat, { left: stablePx + p * sw });
         } else {
-          const t = (p - BOAT_EXIT_START_PROGRESS) / (1 - BOAT_EXIT_START_PROGRESS);
+          const t =
+            (p - BOAT_EXIT_START_PROGRESS) / (1 - BOAT_EXIT_START_PROGRESS);
           const leftAt09 = stablePx + BOAT_EXIT_START_PROGRESS * sw;
           const leftAt1 = sw + vw + BOAT_WIDTH_PX;
           gsap.set(boat, { left: leftAt09 + t * (leftAt1 - leftAt09) });
         }
       },
     });
+    scrollTriggerRef.current = st;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 's' && e.key !== 'S') return;
+      e.preventDefault();
+      const tween = autoScrollTweenRef.current;
+      if (tween && tween.isActive()) {
+        if (tween.paused()) tween.play();
+        else tween.pause();
+        return;
+      }
+      shouldAutoScrollWhenEntranceDoneRef.current = true;
+      if (hasEnteredRef.current) {
+        shouldAutoScrollWhenEntranceDoneRef.current = false;
+        startAutoScroll();
+      } else if (!entranceRef.current) {
+        createEntrance();
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
 
     return () => {
+      window.removeEventListener('keydown', handleKeyDown);
       entranceRef.current?.kill();
       entranceRef.current = null;
+      autoScrollTweenRef.current?.kill();
+      autoScrollTweenRef.current = null;
+      scrollTriggerRef.current = null;
       sway.kill();
       st.kill();
     };
