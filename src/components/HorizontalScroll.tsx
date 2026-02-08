@@ -17,20 +17,24 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  /** 仅包含 sections 的容器，用其宽度计算可滚动距离，避免黑屏 */
+  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const container = containerRef.current;
     const wrapper = wrapperRef.current;
+    const content = contentRef.current;
 
-    if (!container || !wrapper) return;
+    if (!container || !wrapper || !content) return;
 
-    // 计算总宽度（所有子元素的宽度减去视口宽度）
+    // 可滚动距离 = 内容总宽 - 视口宽（只用 content 的宽度，不包含 overlay）
     const getScrollWidth = () => {
-      return wrapper.scrollWidth - window.innerWidth;
+      const contentWidth = content.offsetWidth;
+      const viewportWidth = window.innerWidth;
+      return Math.max(0, contentWidth - viewportWidth);
     };
 
     // 创建水平滚动动画
-    // 使用 ease: "none" 确保线性动画，这对于 ScrollTrigger 很重要
     const horizontalScrollTween = gsap.to(wrapper, {
       x: () => -getScrollWidth(),
       ease: 'none',
@@ -42,7 +46,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
         scrub: 1,
         invalidateOnRefresh: true,
         anticipatePin: 1,
-        markers: false, // 设置为 true 可以显示调试标记
+        markers: false,
       },
     });
 
@@ -53,9 +57,17 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
 
     window.addEventListener('resize', handleResize);
 
+    // 首帧与资源加载后用实际布局刷新，避免初始计算不准导致多滚出黑屏
+    const refreshId = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+    const timeoutId = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+
     // 清理函数
     return () => {
       window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(refreshId);
+      window.clearTimeout(timeoutId);
       horizontalScrollTween.kill();
       ScrollTrigger.getAll().forEach((trigger) => {
         if (trigger.vars.trigger === container) {
@@ -70,17 +82,23 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       ref={containerRef}
       className={`relative w-screen h-screen overflow-hidden flex items-center justify-center ${className}`}
     >
-      {/* 舞台 84vh 垂直居中，上下留黑 = 电影感；min-w-0 防止被内部宽内容撑开导致只显示第一屏 */}
       <div
         className="relative w-full min-w-0 overflow-hidden shrink-0"
-        style={{ height: '84vh' }}
+        style={{ height: '100vh' }}
       >
         <div
           ref={wrapperRef}
           className="relative flex h-full will-change-transform"
           style={{ width: 'max-content' }}
         >
-          {children}
+          {/* 仅内容区参与宽度计算，ref 用于精确计算可滚动距离 */}
+          <div
+            ref={contentRef}
+            className="flex h-full shrink-0"
+            style={{ width: 'max-content' }}
+          >
+            {children}
+          </div>
           <CottonOverlay />
           <WeatheredOverlay />
         </div>

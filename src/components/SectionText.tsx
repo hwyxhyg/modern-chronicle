@@ -32,12 +32,12 @@ export default function SectionText({
       style={{
         zIndex: Z_LAYERS.CONTENT,
         fontFamily: "'Huiwen-mincho', serif",
+        color: '#000', // 默认黑色，可被 style 中的 color 覆盖
         ...style,
       }}
     >
       {title != null && title !== '' && (
         <h2
-          className="text-black"
           style={{
             fontSize: pxToVw(88),
             lineHeight: 1.2,
@@ -48,7 +48,6 @@ export default function SectionText({
         </h2>
       )}
       <p
-        className="text-black"
         style={{
           fontSize: pxToVw(28),
           lineHeight: 1.6,
