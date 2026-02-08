@@ -7,6 +7,8 @@ export const Z_LAYERS = {
   CONTENT: 4,
   /** 全局棉纹层：高于所有 section 的 background，低于所有 section 的 frontend */
   COTTON: 79,
+  /** 小船：高于 cotton，低于各 section 前景/内容 */
+  BOAT: 80,
   /** 全局老旧滤镜层：始终最上层 */
   WEATHERED: 100,
 } as const;

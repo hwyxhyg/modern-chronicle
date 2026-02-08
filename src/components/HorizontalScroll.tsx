@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import Boat from './Boat';
 import CottonOverlay from './CottonOverlay';
 import WeatheredOverlay from './WeatheredOverlay';
 
@@ -91,13 +92,14 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
           className="relative flex h-full will-change-transform"
           style={{ width: 'max-content' }}
         >
-          {/* 仅内容区参与宽度计算，ref 用于精确计算可滚动距离 */}
+          {/* 仅内容区参与宽度计算，ref 用于精确计算可滚动距离；Boat 放此处与 section 各层同叠层上下文，保证 背景 < cotton < 小船 < 前景/内容 < weathered */}
           <div
             ref={contentRef}
             className="flex h-full shrink-0"
             style={{ width: 'max-content' }}
           >
             {children}
+            <Boat containerRef={containerRef} contentRef={contentRef} />
           </div>
           <CottonOverlay />
           <WeatheredOverlay />
