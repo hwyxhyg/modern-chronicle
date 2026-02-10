@@ -2,7 +2,7 @@ import backgroundImage from '../assets/section8/background.png';
 import frontendImage from '../assets/section8/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
-const Z = getSectionZLayers(8);
+const Z = getSectionZLayers();
 import SectionChart from '../components/SectionChart';
 import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';

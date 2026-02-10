@@ -13,7 +13,7 @@ export const Z_LAYERS = {
   WEATHERED: 100,
 } as const;
 
-export function getSectionZLayers(sectionIndex: number) {
+export function getSectionZLayers() {
   return {
     BACKGROUND: Z_LAYERS.BACKGROUND,
     FRONTEND: Z_LAYERS.FRONTEND,

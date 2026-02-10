@@ -1,9 +1,8 @@
 import backgroundImage from '../assets/section2/background.png';
 import frontendImage from '../assets/section2/frontend.png';
-import chartImage from '../assets/section2/chart.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
-const Z = getSectionZLayers(2);
+const Z = getSectionZLayers();
 import SectionChart from '../components/SectionChart';
 import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
