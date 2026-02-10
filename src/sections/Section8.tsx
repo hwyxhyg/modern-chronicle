@@ -16,6 +16,22 @@ const SECTION8_TEXTS: SectionTextProps[] = [
       top: '10% ',
     },
   },
+  {
+    body: `Zhao Dachun’s life is like a tree passing through the seasons—taking root in the\nchill of early spring,stretching through the heat of summer,and bearing fruit in\nautumn.He endured famine,misdiagnosis, separation, and an unjust marriage. He once\nfell into spiritual winter.Yet again and again—through collective movements, through\ncracks in institutions, through the kindness of others—he rediscovered warmth, held\nfast to conscience, and carved his own path.`,
+    style: {
+      left: '150vw',
+      top: '10% ',
+      color: '#fff',
+    },
+  },
+  {
+    body: `Time will change. Systems will shift. Landscapes will transform. But the genuine bonds\nbetween people remain the softest anchor across time. This world is worth cherishing,\nultimately because— there are still people like Zhao Dachun, and because there remains\na light of warmth that has not been extinguished.`,
+    style: {
+      left: '150vw',
+      bottom: '15% ',
+      color: '#fff',
+    },
+  },
 ];
 
 export default function Section8() {

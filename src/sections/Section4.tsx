@@ -39,7 +39,11 @@ const SECTION4_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: `During this period, Zhao Dachun lost both of his parents. In his memoir, written in the third person, \nhe recalls:“At the train station, he repeatedly urged his mother that if things became difficult after\nreturning home, she must come again.\nBut just over a month later, the bad news arrived—his father had passed away. When he saw the grave,\nhe broke down in tears, unable to understand why it had happened so quickly…He had thought that with\naccess to food at the communal canteen, and with the supplies he had brought this time, they would be\nfine for a while.”\nYet in the face of such calamity, there was nothing he could do.`,
+    body: [
+      `During this period, Zhao Dachun lost both of his parents. In his memoir, written in the third person, \nhe recalls:“At the train station, he repeatedly urged his mother that if things became difficult after\nreturning home, she must come again.`,
+      `But just over a month later, the bad news arrived—his father had passed away. When he saw the grave,\nhe broke down in tears, unable to understand why it had happened so quickly…He had thought that with\naccess to food at the communal canteen, and with the supplies he had brought this time, they would be\nfine for a while.”`,
+      `Yet in the face of such calamity, there was nothing he could do.`,
+    ],
     style: {
       left: '240vw',
       top: '10% ',

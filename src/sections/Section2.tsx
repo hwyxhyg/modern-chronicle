@@ -12,7 +12,10 @@ const SECTION2_WIDTH = '200vw';
 const SECTION2_TEXTS: SectionTextProps[] = [
   {
     title: '1949-1957',
-    body: 'In 1952, Zhao Dachun signed up to join the army. During the selection medical examination, he was\nmisdiagnosed with heart disease and declared physically unfit. Since the founding of the People’s\nRepublic of China, the number of medical institutions in China has been extremely limited. Moreover, although the number has been increasing, most of them are small clinics, which also contributes to a generally low standard of medical care.',
+    body: [
+      'In 1952, Zhao Dachun signed up to join the army. During the selection medical examination,\nhe was misdiagnosed with heart disease and declared physically unfit. ',
+      'Since the founding of the People’s Republic of China, the number of medical institutions in\nChina has been extremely limited. Moreover, although the number has been increasing, most\nof them are small clinics, which also contributes to a generally low standard of medical care.',
+    ],
     src: chartImage,
     style: {
       left: '10vw',

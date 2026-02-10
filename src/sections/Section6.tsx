@@ -11,7 +11,11 @@ const SECTION6_WIDTH = '200vw';
 const SECTION6_TEXTS: SectionTextProps[] = [
   {
     title: '1961-1977',
-    body: `At the same time, the “Up to the Mountains and Down to the Countryside”\nmovement unfolded. In 1969, the number of sent-down youth reached its\npeak, with 2.67 million young people relocated that year alone.\n\nThis political movement led to a continuous decline in the number of college\nstudents since 1961. Although the Chinese people were lifted out of illiteracy,\nit remained difficult for them to access higher education.`,
+    body: [
+      `At the same time, the “Up to the Mountains and Down to the Countryside”\nmovement unfolded. In 1969, the number of sent-down youth reached its\npeak, with 2.67 million young people relocated that year alone.`,
+      ` `,
+      `This political movement led to a continuous decline in the number of college\nstudents since 1961. Although the Chinese people were lifted out of illiteracy,\nit remained difficult for them to access higher education.`,
+    ],
     style: {
       left: '10vw',
       top: '10% ',

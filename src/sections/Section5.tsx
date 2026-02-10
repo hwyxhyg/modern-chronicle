@@ -18,14 +18,22 @@ const SECTION5_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: `However, despite this, Chinese society remained highly unstable due to the influence of political\nmovements. From the late 1950s to the 1970s, China experienced a massive population movement\n—the Up to the Mountains and Down to the Countryside Movement. \n\nIn 1969, the number of people going to the countryside reached its peak, with 2.6738 million\neducated youth sent down that year alone. At the policy level, this movement was imbued with\nidealistic undertones of "receiving re-education from the poor and lower-middle peasants" and \n"building new socialist rural areas." Tens of millions of urban youth were organized or mobilized\nto go to the countryside and frontier regions.`,
+    body: [
+      `However, despite this, Chinese society remained highly unstable due to the influence of political\nmovements. From the late 1950s to the 1970s, China experienced a massive population movement\n—the Up to the Mountains and Down to the Countryside Movement.`,
+      ` `,
+      `In 1969, the number of people going to the countryside reached its peak, with 2.6738 million\neducated youth sent down that year alone. At the policy level, this movement was imbued with\nidealistic undertones of "receiving re-education from the poor and lower-middle peasants" and \n"building new socialist rural areas." Tens of millions of urban youth were organized or mobilized\nto go to the countryside and frontier regions.`,
+    ],
     style: {
       left: '110vw',
       top: '10% ',
     },
   },
   {
-    body: `However, in reality, an individual's destination and fate often did not depend on\ntheir own interests or expertise. Family background, personal connections, and\neven the specific ways local policies were implemented all factually determined\neach young person's placement location and life trajectory.\n\nZhao Dachun served as a committee member of the Health Bureau's Revolutionary\nCommittee, responsible for drafting specific plans for medical personnel reform\nand rustication. Faced with many people who were unwilling to be sent down and\nsought connections or pleaded for favors, he still insisted on handling matters\naccording to principles, ensuring the fair implementation of the plan. His work\ncapability and decisiveness earned high praise from senior cadres who were sent\ndown at the time.`,
+    body: [
+      `However, in reality, an individual's destination and fate often did not depend on\ntheir own interests or expertise. Family background, personal connections, and\neven the specific ways local policies were implemented all factually determined\neach young person's placement location and life trajectory.`,
+      ` `,
+      `Zhao Dachun served as a committee member of the Health Bureau's Revolutionary\nCommittee, responsible for drafting specific plans for medical personnel reform\nand rustication. Faced with many people who were unwilling to be sent down and\nsought connections or pleaded for favors, he still insisted on handling matters\naccording to principles, ensuring the fair implementation of the plan. His work\ncapability and decisiveness earned high praise from senior cadres who were sent\ndown at the time.`,
+    ],
     style: {
       left: '210vw',
       top: '10% ',

@@ -6,14 +6,16 @@ const BASE_VIEWPORT_WIDTH = 2560;
 export interface SectionTextProps {
   /** 可选标题，纯文本 */
   title?: string;
-  /** 正文，纯文本，可选 */
-  body?: string;
+  /** 正文，纯文本或段落数组，可选 */
+  body?: string | string[];
   /** 正文下方配图，可选 */
   src?: string;
   /** 标题样式，透传到 h2 */
   titleStyle?: React.CSSProperties;
-  /** 正文样式，透传到 p */
+  /** 正文样式，透传到包裹正文的容器（不作用于内部 p） */
   bodyStyle?: React.CSSProperties;
+  /** 是否开启两端对齐：false = 正常文档流（便于确定换行位置），true = 按换行符分行并两侧对齐，默认 true */
+  justify?: boolean;
   /** 配图容器样式，透传到包裹 img 的 div */
   srcStyle?: React.CSSProperties;
   /** 定位与尺寸等样式，直接透传至根节点（可写 left/top/maxWidth 等，支持 vw/vh/%） */
@@ -35,17 +37,28 @@ export default function SectionText({
   src,
   titleStyle,
   bodyStyle,
+  justify = true,
   srcStyle,
   style,
 }: SectionTextProps) {
   const hasTitle = title != null && title !== '';
-  const hasBody = body != null && body !== '';
+  const bodyParagraphs: string[] =
+    body == null
+      ? []
+      : Array.isArray(body)
+        ? body.filter((p) => p != null && p !== '')
+        : body === ''
+          ? []
+          : [body];
+  const hasBody = bodyParagraphs.length > 0;
   const hasSrc = src != null && src !== '';
 
-  const baseBodyStyle: React.CSSProperties = {
+  const wrapperStyle: React.CSSProperties = {
     fontSize: pxToVw(28),
     lineHeight: 1.6,
     whiteSpace: 'pre-wrap',
+    ...(justify && { display: 'inline-block', width: 'max-content' }),
+    ...bodyStyle,
   };
 
   return (
@@ -71,14 +84,29 @@ export default function SectionText({
         </h2>
       )}
       {hasBody && (
-        <p
-          style={{
-            ...baseBodyStyle,
-            ...bodyStyle,
-          }}
-        >
-          {body}
-        </p>
+        <div style={wrapperStyle}>
+          {bodyParagraphs.map((para, pIndex) => (
+            <p key={pIndex}>
+              {justify
+                ? para.split('\n').map((line, index, lines) => {
+                    const isLastLine = index === lines.length - 1;
+                    return (
+                      <span
+                        key={index}
+                        style={{
+                          display: 'block',
+                          textAlign: isLastLine ? 'left' : 'justify',
+                          textAlignLast: isLastLine ? 'left' : 'justify',
+                        }}
+                      >
+                        {line}
+                      </span>
+                    );
+                  })
+                : para}
+            </p>
+          ))}
+        </div>
       )}
       {hasSrc && (
         <div

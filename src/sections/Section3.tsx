@@ -17,7 +17,12 @@ const SECTION3_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: 'A single sheet of diagnosis paper suddenly altered the course of his life.\nHis dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.\nUnder such circumstances, after failing to enlist, Zhao returned home and accepted an\narranged marriage arranged by his parents, marrying a rural woman.',
+    body: [
+      'A single sheet of diagnosis paper suddenly altered the course of his life.',
+      'His dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.',
+      'Under such circumstances, after failing to enlist, Zhao returned home and accepted an\narranged marriage arranged by his parents, marrying a rural woman.',
+    ],
+    justify: false,
     style: {
       left: '5vw',
       top: '20% ',
