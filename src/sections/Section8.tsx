@@ -3,16 +3,20 @@ import frontendImage from '../assets/section8/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION8_WIDTH = '200vw';
 
-const SECTION8_TEXTS: SectionTextProps[] = [];
-
-const SECTION8_CHARTS: SectionChartProps[] = [];
+const SECTION8_TEXTS: SectionTextProps[] = [
+  {
+    title: '1978-Now',
+    style: {
+      left: '10vw',
+      top: '10% ',
+    },
+  },
+];
 
 export default function Section8() {
   return (
@@ -57,9 +61,6 @@ export default function Section8() {
           >
             {SECTION8_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION8_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>

@@ -3,16 +3,12 @@ import frontendImage from '../assets/section7/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION7_WIDTH = '300vw';
 
 const SECTION7_TEXTS: SectionTextProps[] = [];
-
-const SECTION7_CHARTS: SectionChartProps[] = [];
 
 export default function Section7() {
   return (
@@ -57,9 +53,6 @@ export default function Section7() {
           >
             {SECTION7_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION7_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>

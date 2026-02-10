@@ -1,18 +1,56 @@
 import backgroundImage from '../assets/section1/background.png';
 import frontendImage from '../assets/section1/frontend.png';
+import chartImage from '../assets/section1/chart.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION1_WIDTH = '300vw';
 
-const SECTION1_TEXTS: SectionTextProps[] = [];
-
-const SECTION1_CHARTS: SectionChartProps[] = [];
+const SECTION1_TEXTS: SectionTextProps[] = [
+  {
+    title: '1949-1957',
+    style: {
+      left: '5vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: 'At the dawn of an era, all things await revival.\nAgainst this backdrop, love, health, and marriage\nwere rarely matters of personal will.',
+    style: {
+      left: '5vw',
+      top: '18% ',
+    },
+  },
+  {
+    body: 'In 1949, the People’s Republic of China had just been founded. Institutions were still under construction, \nresources were extremely scarce, and everything awaited recovery. Compared with Europe and the United\nStates, China’s per capita income, medical resources, and infrastructure were at very low levels.\nThe urban–rural divide was stark, public services were limited, and individual life choices were profoundly\nconstrained by conditions of survival and institutional structures.',
+    style: {
+      left: '40vw',
+      top: '18% ',
+    },
+  },
+  {
+    body: 'Zhao Da chun was born in 1934. Like a small boat, an individual life set\nsail amid the vast ocean of history. ',
+    style: {
+      left: '105vw',
+      top: '18% ',
+    },
+  },
+  {
+    body: "China's total GDP ranks fifth globally, but due to its massive\npopulation, its GDP per capita ranks among the lowest in the\nworld.",
+    style: {
+      right: '60vw',
+      top: '18% ',
+      width: '40vw',
+    },
+    bodyStyle: {
+      marginBottom: '15vh',
+    },
+    src: chartImage,
+  },
+];
 
 export default function Section1() {
   return (
@@ -62,9 +100,6 @@ export default function Section1() {
           >
             {SECTION1_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION1_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>

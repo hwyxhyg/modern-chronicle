@@ -38,6 +38,32 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       }
     };
 
+    /**
+     * 根据前景/背景（以及 overlay）真实渲染高度与视口高度的关系，
+     * 决定是垂直居中还是贴底对齐：
+     * - 未超过视口：移除 .section-frontend--bottom，保持居中
+     * - 超过视口：添加 .section-frontend--bottom，贴底，仅裁剪上方
+     */
+    const updateFrontendAlign = () => {
+      const viewportHeight =
+        window.innerHeight || document.documentElement.clientHeight || 0;
+      if (!viewportHeight) return;
+
+      const frontends =
+        content.querySelectorAll<HTMLElement>('.section-frontend');
+
+      frontends.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (!rect.height) return;
+
+        if (rect.height > viewportHeight) {
+          el.classList.add('section-frontend--bottom');
+        } else {
+          el.classList.remove('section-frontend--bottom');
+        }
+      });
+    };
+
     // 可滚动距离 = 内容总宽 - 视口宽（只用 content 的宽度，不包含 overlay）
     const getScrollWidth = () => {
       const contentWidth = content.offsetWidth;
@@ -65,6 +91,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     const handleResize = () => {
       ScrollTrigger.refresh();
       updateSectionHeight();
+      updateFrontendAlign();
     };
 
     window.addEventListener('resize', handleResize);
@@ -73,10 +100,12 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     const refreshId = requestAnimationFrame(() => {
       ScrollTrigger.refresh();
       updateSectionHeight();
+      updateFrontendAlign();
     });
     const timeoutId = window.setTimeout(() => {
       ScrollTrigger.refresh();
       updateSectionHeight();
+      updateFrontendAlign();
     }, 300);
 
     // 清理函数

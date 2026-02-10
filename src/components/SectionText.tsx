@@ -6,8 +6,16 @@ const BASE_VIEWPORT_WIDTH = 2560;
 export interface SectionTextProps {
   /** 可选标题，纯文本 */
   title?: string;
-  /** 正文，纯文本，必传 */
-  body: string;
+  /** 正文，纯文本，可选 */
+  body?: string;
+  /** 正文下方配图，可选 */
+  src?: string;
+  /** 标题样式，透传到 h2 */
+  titleStyle?: React.CSSProperties;
+  /** 正文样式，透传到 p */
+  bodyStyle?: React.CSSProperties;
+  /** 配图容器样式，透传到包裹 img 的 div */
+  srcStyle?: React.CSSProperties;
   /** 定位与尺寸等样式，直接透传至根节点（可写 left/top/maxWidth 等，支持 vw/vh/%） */
   style?: React.CSSProperties;
 }
@@ -24,8 +32,22 @@ function pxToVw(px: number): string {
 export default function SectionText({
   title,
   body,
+  src,
+  titleStyle,
+  bodyStyle,
+  srcStyle,
   style,
 }: SectionTextProps) {
+  const hasTitle = title != null && title !== '';
+  const hasBody = body != null && body !== '';
+  const hasSrc = src != null && src !== '';
+
+  const baseBodyStyle: React.CSSProperties = {
+    fontSize: pxToVw(28),
+    lineHeight: 1.6,
+    whiteSpace: 'pre-wrap',
+  };
+
   return (
     <article
       className="absolute w-full max-w-full"
@@ -36,26 +58,35 @@ export default function SectionText({
         ...style,
       }}
     >
-      {title != null && title !== '' && (
+      {hasTitle && (
         <h2
           style={{
             fontSize: pxToVw(88),
             lineHeight: 1.2,
             marginBottom: pxToVw(12),
+            ...titleStyle,
           }}
         >
           {title}
         </h2>
       )}
-      <p
-        style={{
-          fontSize: pxToVw(28),
-          lineHeight: 1.6,
-          whiteSpace: 'pre-line',
-        }}
-      >
-        {body}
-      </p>
+      {hasBody && (
+        <p
+          style={{
+            ...baseBodyStyle,
+            ...bodyStyle,
+          }}
+        >
+          {body}
+        </p>
+      )}
+      {hasSrc && (
+        <div
+          style={srcStyle}
+        >
+          <img src={src} alt="" className="block w-full h-auto" />
+        </div>
+      )}
     </article>
   );
 }

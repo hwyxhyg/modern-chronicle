@@ -44,16 +44,16 @@ body {
   }
 }
 
-/* 前景图与背景保持同样的垂直对齐策略：不足时居中，超出时贴底，仅裁剪上方。 */
+/* 前景图与背景：
+ * - 默认：垂直居中（top: 50% + translateY(-50%)）
+ * - 当高度超过视口时：通过额外类 .section-frontend--bottom 改为贴底，仅裁剪上方。 */
 .section-frontend {
   top: 50%;
   transform: translateY(-50%);
 }
 
-@media (min-aspect-ratio: 16/9) {
-  .section-frontend {
-    top: auto;
-    bottom: 0;
-    transform: none;
-  }
+.section-frontend--bottom {
+  top: auto;
+  bottom: 0;
+  transform: none;
 }

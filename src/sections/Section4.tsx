@@ -3,16 +3,49 @@ import frontendImage from '../assets/section4/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION4_WIDTH = '300vw';
 
-const SECTION4_TEXTS: SectionTextProps[] = [];
-
-const SECTION4_CHARTS: SectionChartProps[] = [];
+const SECTION4_TEXTS: SectionTextProps[] = [
+  {
+    title: '1957-1961',
+    body: 'Natural disasters and human calamities followed one\nafter another; separations by life and death were\nunpredictable. During this dark period, a large number\nof Chinese people died from starvation.',
+    style: {
+      left: '8vw',
+      top: '10% ',
+    },
+  },
+  {
+    title: '1957-1961',
+    style: {
+      left: '110vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: `In the late 1950s, amid political struggles within the Party, the errors of the "Great\nLeap Forward" and the "Anti-Rightist Deviation" campaign laid the groundwork for\nexaggerated agricultural production claims. From 1959 to 1961, three years of natural\ndisasters, combined with the Soviet government's perfidious tearing up of contracts,\ncaused severe difficulties in China's national economy, inflicting major losses on the\ncountry and its people.`,
+    style: {
+      left: '140vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: `Hand-writing letter by Zhao Dachun`,
+    style: {
+      left: '140vw',
+      bottom: '25% ',
+    },
+  },
+  {
+    body: `During this period, Zhao Dachun lost both of his parents. In his memoir, written in the third person, \nhe recalls:“At the train station, he repeatedly urged his mother that if things became difficult after\nreturning home, she must come again.\nBut just over a month later, the bad news arrived—his father had passed away. When he saw the grave,\nhe broke down in tears, unable to understand why it had happened so quickly…He had thought that with\naccess to food at the communal canteen, and with the supplies he had brought this time, they would be\nfine for a while.”\nYet in the face of such calamity, there was nothing he could do.`,
+    style: {
+      left: '240vw',
+      top: '10% ',
+    },
+  },
+];
 
 export default function Section4() {
   return (
@@ -57,9 +90,6 @@ export default function Section4() {
           >
             {SECTION4_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION4_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>

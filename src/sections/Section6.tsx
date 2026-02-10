@@ -3,16 +3,21 @@ import frontendImage from '../assets/section6/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION6_WIDTH = '200vw';
 
-const SECTION6_TEXTS: SectionTextProps[] = [];
-
-const SECTION6_CHARTS: SectionChartProps[] = [];
+const SECTION6_TEXTS: SectionTextProps[] = [
+  {
+    title: '1961-1977',
+    body: `At the same time, the “Up to the Mountains and Down to the Countryside”\nmovement unfolded. In 1969, the number of sent-down youth reached its\npeak, with 2.67 million young people relocated that year alone.\n\nThis political movement led to a continuous decline in the number of college\nstudents since 1961. Although the Chinese people were lifted out of illiteracy,\nit remained difficult for them to access higher education.`,
+    style: {
+      left: '10vw',
+      top: '10% ',
+    },
+  },
+];
 
 export default function Section6() {
   return (
@@ -57,9 +62,6 @@ export default function Section6() {
           >
             {SECTION6_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION6_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>

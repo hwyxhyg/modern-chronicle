@@ -3,16 +3,41 @@ import frontendImage from '../assets/section3/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION3_WIDTH = '200vw';
 
-const SECTION3_TEXTS: SectionTextProps[] = [];
-
-const SECTION3_CHARTS: SectionChartProps[] = [];
+const SECTION3_TEXTS: SectionTextProps[] = [
+  {
+    title: '1949-1957',
+    style: {
+      left: '5vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: 'A single sheet of diagnosis paper suddenly altered the course of his life.\nHis dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.\nUnder such circumstances, after failing to enlist, Zhao returned home and accepted an\narranged marriage arranged by his parents, marrying a rural woman.',
+    style: {
+      left: '5vw',
+      top: '20% ',
+    },
+  },
+  {
+    body: 'In China around the early 1950s, marriage choices were deeply shaped by family structures and\nsocial norms. Although the Marriage Law had legally established freedom of marriage and gender\nequality, arranged marriages and matchmakers remained widespread in everyday life.',
+    style: {
+      left: '5vw',
+      bottom: '15% ',
+    },
+  },
+  {
+    body: '“Reliability” and “stability”—being honest, mild-mannered, and aligned with family and \nsocial expectations—often outweighed personal emotion. “Good family background” and \n“political safety” became crucial, if unspoken, criteria.',
+    style: {
+      left: '80vw',
+      top: '20% ',
+    },
+  },
+];
 
 export default function Section3() {
   return (
@@ -57,9 +82,6 @@ export default function Section3() {
           >
             {SECTION3_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION3_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>

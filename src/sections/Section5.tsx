@@ -3,16 +3,35 @@ import frontendImage from '../assets/section5/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
-import SectionChart from '../components/SectionChart';
-import type { SectionChartProps } from '../components/SectionChart';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION5_WIDTH = '300vw';
 
-const SECTION5_TEXTS: SectionTextProps[] = [];
-
-const SECTION5_CHARTS: SectionChartProps[] = [];
+const SECTION5_TEXTS: SectionTextProps[] = [
+  {
+    title: '1957-1961',
+    body: `But even during those dark times, people did not abandon their thirst for\nknowledge. As the shadow of the disasters gradually lifted, another profound\ntransformation was taking place across the land of China -- Having endured\nphysical hunger and loss, people began to be driven by a new kind of yearning\n—a hunger for knowledge.`,
+    style: {
+      left: '8vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: `However, despite this, Chinese society remained highly unstable due to the influence of political\nmovements. From the late 1950s to the 1970s, China experienced a massive population movement\n—the Up to the Mountains and Down to the Countryside Movement. \n\nIn 1969, the number of people going to the countryside reached its peak, with 2.6738 million\neducated youth sent down that year alone. At the policy level, this movement was imbued with\nidealistic undertones of "receiving re-education from the poor and lower-middle peasants" and \n"building new socialist rural areas." Tens of millions of urban youth were organized or mobilized\nto go to the countryside and frontier regions.`,
+    style: {
+      left: '110vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: `However, in reality, an individual's destination and fate often did not depend on\ntheir own interests or expertise. Family background, personal connections, and\neven the specific ways local policies were implemented all factually determined\neach young person's placement location and life trajectory.\n\nZhao Dachun served as a committee member of the Health Bureau's Revolutionary\nCommittee, responsible for drafting specific plans for medical personnel reform\nand rustication. Faced with many people who were unwilling to be sent down and\nsought connections or pleaded for favors, he still insisted on handling matters\naccording to principles, ensuring the fair implementation of the plan. His work\ncapability and decisiveness earned high praise from senior cadres who were sent\ndown at the time.`,
+    style: {
+      left: '210vw',
+      top: '10% ',
+    },
+  },
+];
 
 export default function Section5() {
   return (
@@ -57,9 +76,6 @@ export default function Section5() {
           >
             {SECTION5_TEXTS.map((item, i) => (
               <SectionText key={i} {...item} />
-            ))}
-            {SECTION5_CHARTS.map((item, i) => (
-              <SectionChart key={i} {...item} />
             ))}
           </div>
         </div>
