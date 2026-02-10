@@ -29,3 +29,31 @@ body {
     Cantarell,
     sans-serif;
 }
+
+/* 横向长卷每一幕的背景：宽度固定 100%，高度按比例缩放。
+ * 当图片高度不足视口时，垂直居中显示；当高度大于视口时，贴底对齐，仅裁剪上方。 */
+.section-bg {
+  background-position: left center;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .section-bg {
+    background-position: left bottom;
+  }
+}
+
+/* 前景图与背景保持同样的垂直对齐策略：不足时居中，超出时贴底，仅裁剪上方。 */
+.section-frontend {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .section-frontend {
+    top: auto;
+    bottom: 0;
+    transform: none;
+  }
+}
