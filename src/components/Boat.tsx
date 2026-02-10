@@ -8,7 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const BOAT_LEFT_STABLE = 40; // vw
 const BOAT_EXIT_START_PROGRESS = 0.9; // 滚动进度超过此值时开始右移出
-const BOAT_WIDTH_PX = 200;
+const BOAT_WIDTH_VW = 10;
+const BOAT_BOTTOM_VH = 20; // 小船垂直位置：距底部的视口高度百分比
 const AUTO_SCROLL_DURATION = 120;
 
 interface BoatProps {
@@ -77,7 +78,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       entranceRef.current = entrance;
     };
 
-    gsap.set(boat, { left: -0.3 * viewportW, bottom: '25vh' });
+    gsap.set(boat, { left: -0.3 * viewportW, bottom: `${BOAT_BOTTOM_VH}vh` });
     createEntrance();
 
     const sway = gsap.fromTo(
@@ -90,7 +91,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-      }
+      },
     );
 
     const st = ScrollTrigger.create({
@@ -115,7 +116,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
           const t =
             (p - BOAT_EXIT_START_PROGRESS) / (1 - BOAT_EXIT_START_PROGRESS);
           const leftAt09 = stablePx + BOAT_EXIT_START_PROGRESS * sw;
-          const leftAt1 = sw + vw + BOAT_WIDTH_PX;
+          const leftAt1 = sw + vw + (BOAT_WIDTH_VW / 100) * vw;
           gsap.set(boat, { left: leftAt09 + t * (leftAt1 - leftAt09) });
         }
       },
@@ -159,7 +160,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       ref={boatRef}
       className="pointer-events-none absolute flex items-end justify-center"
       style={{
-        bottom: '25vh',
+        bottom: `${BOAT_BOTTOM_VH}vh`,
         left: 0,
         zIndex: Z_LAYERS.BOAT,
       }}
@@ -167,7 +168,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       <img
         src={boatSvg}
         alt=""
-        className="h-auto max-h-[35vh] w-[240px] object-contain object-bottom"
+        className="h-auto max-h-[35vh] w-[10vw] object-contain object-bottom"
         draggable={false}
       />
     </div>
