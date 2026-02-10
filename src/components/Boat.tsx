@@ -8,8 +8,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const BOAT_LEFT_STABLE = 40; // vw
 const BOAT_EXIT_START_PROGRESS = 0.9; // 滚动进度超过此值时开始右移出
-const BOAT_WIDTH_PX = 240;
-const AUTO_SCROLL_DURATION = 80;
+const BOAT_WIDTH_PX = 200;
+const AUTO_SCROLL_DURATION = 120;
 
 interface BoatProps {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -90,7 +90,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
         ease: 'sine.inOut',
         yoyo: true,
         repeat: -1,
-      },
+      }
     );
 
     const st = ScrollTrigger.create({
