@@ -6,8 +6,10 @@ export default function WeatheredOverlay() {
   return (
     <div
       aria-hidden
-      className="absolute inset-0 min-h-full pointer-events-none"
+      className="absolute pointer-events-none section-frontend"
       style={{
+        width: '100%',
+        height: 'var(--section-height, 100%)',
         zIndex: Z_LAYERS.WEATHERED,
         backgroundImage: `url(${weatheredLayer})`,
         backgroundRepeat: 'repeat',

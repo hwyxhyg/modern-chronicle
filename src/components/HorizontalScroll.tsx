@@ -28,6 +28,16 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
 
     if (!container || !wrapper || !content) return;
 
+    const updateSectionHeight = () => {
+      const firstFrontend =
+        content.querySelector<HTMLElement>('.section-frontend');
+      if (!firstFrontend) return;
+      const rect = firstFrontend.getBoundingClientRect();
+      if (rect.height > 0) {
+        wrapper.style.setProperty('--section-height', `${rect.height}px`);
+      }
+    };
+
     // 可滚动距离 = 内容总宽 - 视口宽（只用 content 的宽度，不包含 overlay）
     const getScrollWidth = () => {
       const contentWidth = content.offsetWidth;
@@ -54,6 +64,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     // 窗口大小改变时刷新 ScrollTrigger
     const handleResize = () => {
       ScrollTrigger.refresh();
+      updateSectionHeight();
     };
 
     window.addEventListener('resize', handleResize);
@@ -61,8 +72,12 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     // 首帧与资源加载后用实际布局刷新，避免初始计算不准导致多滚出黑屏
     const refreshId = requestAnimationFrame(() => {
       ScrollTrigger.refresh();
+      updateSectionHeight();
     });
-    const timeoutId = window.setTimeout(() => ScrollTrigger.refresh(), 300);
+    const timeoutId = window.setTimeout(() => {
+      ScrollTrigger.refresh();
+      updateSectionHeight();
+    }, 300);
 
     // 清理函数
     return () => {
