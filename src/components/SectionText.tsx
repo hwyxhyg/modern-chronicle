@@ -14,7 +14,7 @@ export interface SectionTextProps {
   titleStyle?: React.CSSProperties;
   /** 正文样式，透传到包裹正文的容器（不作用于内部 p） */
   bodyStyle?: React.CSSProperties;
-  /** 是否开启两端对齐：false = 正常文档流（便于确定换行位置），true = 按换行符分行并两侧对齐，默认 true */
+  /** 是否开启两端对齐（同时作用于 title 与 body）：false = 正常文档流，true = 按换行符分行并两侧对齐，默认 true */
   justify?: boolean;
   /** 配图容器样式，透传到包裹 img 的 div */
   srcStyle?: React.CSSProperties;
@@ -80,7 +80,27 @@ export default function SectionText({
             ...titleStyle,
           }}
         >
-          {title}
+          {justify
+            ? title.split('\n').map((line, index, lines) => {
+                const isLastLine = index === lines.length - 1;
+                return (
+                  <span
+                    key={index}
+                    style={{
+                      display: 'block',
+                      textAlign: isLastLine ? 'left' : 'justify',
+                      textAlignLast: isLastLine ? 'left' : 'justify',
+                    }}
+                  >
+                    {line}
+                  </span>
+                );
+              })
+            : title.split('\n').map((line, i) => (
+                <span key={i} style={{ display: 'block' }}>
+                  {line}
+                </span>
+              ))}
         </h2>
       )}
       {hasBody && (

@@ -24,6 +24,7 @@ interface BoatProps {
 const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
   const boatRef = useRef<HTMLDivElement>(null);
   const hasEnteredRef = useRef(false);
+  const entranceStartedRef = useRef(false);
   const entranceRef = useRef<gsap.core.Tween | null>(null);
   const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
   const autoScrollTweenRef = useRef<gsap.core.Tween | null>(null);
@@ -152,7 +153,7 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       entranceRef.current = entrance;
     };
 
-    // 初始位置：从左侧画面外进入，垂直位置基于第一个 section 的高度百分比
+    // 初始位置：在左侧画面外，等横向区域进入视口后再执行入场
     gsap.set(boat, { left: -0.3 * viewportW, bottom: 0 });
     currentSectionIndexRef.current = 0;
     currentBottomRatioRef.current = getBottomRatioForSection(0);
@@ -161,7 +162,6 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       currentBottomRatioRef.current,
       true,
     );
-    createEntrance();
 
     const sway = gsap.fromTo(
       boat,
@@ -180,15 +180,27 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       trigger: container,
       start: 'top top',
       end: () => `+=${getScrollWidth()}`,
+      onLeaveBack: () => {
+        hasEnteredRef.current = false;
+        entranceStartedRef.current = false;
+      },
       onUpdate: (self) => {
-        if (!hasEnteredRef.current && self.direction !== 0) {
-          entranceRef.current?.kill();
+        const p = self.progress;
+
+        // 刚进入横向区域（progress 接近 0）时启动一次入场动画，不依赖 onEnter（pin 可能导致 onEnter 不触发）
+        if (p < 0.01 && !entranceStartedRef.current) {
+          entranceStartedRef.current = true;
+          hasEnteredRef.current = false;
+          createEntrance();
+        }
+
+        if (!hasEnteredRef.current && self.direction !== 0 && entranceRef.current) {
+          entranceRef.current.kill();
           entranceRef.current = null;
           hasEnteredRef.current = true;
         }
         if (!hasEnteredRef.current) return;
 
-        const p = self.progress;
         const sw = getScrollWidth();
         const vw = window.innerWidth;
         const stablePx = (BOAT_LEFT_STABLE / 100) * vw;

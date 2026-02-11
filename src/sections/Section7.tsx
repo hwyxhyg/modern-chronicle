@@ -8,7 +8,35 @@ import type { SectionTextProps } from '../components/SectionText';
 
 const SECTION7_WIDTH = '300vw';
 
-const SECTION7_TEXTS: SectionTextProps[] = [];
+const SECTION7_TEXTS: SectionTextProps[] = [
+  {
+    title: '1978-Now',
+    body: [
+      `In 1978, China officially implemented the reform and opening-up policy, adopting a market economy\nand actively integrating into the world. `,
+      `From the 1980s onward, China entered a phase of rapid, development-oriented urbanization.Urban\nconstruction land expanded continuously, supporting industrial production, housing, and infrastructure,\nwhile absorbing growing population mobility. Cities became not only sites of production but also\nprimary spaces for personal careers and daily life.`,
+    ],
+    style: {
+      left: '10vw',
+      top: '10% ',
+    },
+  },
+  {
+    body: `This progression is most visible in land-use patterns.\nSince the 1980s, China's urban construction land has\nexpanded rapidly. At the same time, the actual amount\nof land acquired each year has stayed at a high level\nwith some fluctuations, highlighting the intense demand\nfor land driven by rapid urbanization.`,
+    style: {
+      left: '210vw',
+      top: '10% ',
+      color: '#fff',
+    },
+  },
+  {
+    body: `The tide of rapid urbanization has directly channeled the flow of people and talent unleashed\nby the Reform and Opening-up. This expansion of urban land does more than house industries\nand infrastructure; it serves as a foundation for those who migrated via the Gaokao to build their\ncareers and lives. Returning to his birthplace with childhood friends, Zhao Dachun marveled at\nthe new concrete avenues, the rising apartment blocks, and the rows of phoenix trees. His hometown\nhad shed its identity as a traditional rural settlement, transforming into a modern township.`,
+    style: {
+      left: '245vw',
+      top: '10% ',
+      color: '#fff',
+    },
+  },
+];
 
 export default function Section7() {
   return (

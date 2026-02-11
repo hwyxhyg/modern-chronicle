@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import HorizontalScroll from './components/HorizontalScroll';
 import LoadingScreen from './components/LoadingScreen';
+import Start from './sections/start';
 import Section1 from './sections/Section1';
 import Section2 from './sections/Section2';
 import Section3 from './sections/Section3';
@@ -13,8 +16,11 @@ import { preloadImages, preloadUrls } from './preloadAssets';
 
 const MIN_LOADING_MS = 1200;
 
+gsap.registerPlugin(ScrollTrigger);
+
 function App() {
   const [ready, setReady] = useState(false);
+  const startRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -31,12 +37,55 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const startEl = startRef.current;
+    if (!startEl) return;
+
+    const viewportHeight =
+      window.innerHeight || document.documentElement.clientHeight || 0;
+    if (!viewportHeight) return;
+
+    const tween = gsap.fromTo(
+      startEl,
+      { y: 0, opacity: 1 },
+      {
+        y: -viewportHeight,
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: startEl,
+          start: 'top top',
+          end: () => `+=${viewportHeight}`,
+          scrub: 1,
+          invalidateOnRefresh: true,
+        },
+      },
+    );
+
+    const handleResize = () => {
+      ScrollTrigger.refresh();
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      tween.kill();
+    };
+  }, []);
+
   if (!ready) {
     return <LoadingScreen />;
   }
 
   return (
     <div className="min-h-screen bg-black overflow-x-hidden">
+      <div
+        ref={startRef}
+        className="w-screen h-screen flex items-center justify-center overflow-hidden"
+      >
+        <Start />
+      </div>
       <HorizontalScroll>
         <Section1 />
         <Section2 />
