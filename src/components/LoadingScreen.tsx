@@ -13,7 +13,7 @@ export default function LoadingScreen() {
           className="font-serif text-[clamp(0.875rem,2.5vw,1.125rem)] tracking-[0.4em] text-white/90"
           style={{ fontFamily: "'Huiwen-mincho', serif" }}
         >
-          加载中
+          Loading
         </p>
         <div className="h-px w-40 overflow-hidden rounded-full bg-white/10">
           <div
