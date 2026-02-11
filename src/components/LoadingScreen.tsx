@@ -10,7 +10,7 @@ export default function LoadingScreen() {
     >
       <div className="flex flex-col items-center gap-10">
         <p
-          className="font-serif text-[clamp(0.875rem,2.5vw,1.125rem)] tracking-[0.4em] text-white/90"
+          className="font-serif text-[clamp(1.25rem,3vw,1.75rem)] tracking-[0.4em] text-white/90"
           style={{ fontFamily: "'Huiwen-mincho', serif" }}
         >
           Loading

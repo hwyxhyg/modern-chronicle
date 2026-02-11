@@ -1,6 +1,5 @@
 import backgroundImage from '../assets/section2/background.png';
 import frontendImage from '../assets/section2/frontend.png';
-import chartImage from '../assets/section2/chart.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
@@ -16,14 +15,10 @@ const SECTION2_TEXTS: SectionTextProps[] = [
       'In 1952, Zhao Dachun signed up to join the army. During the selection medical examination,\nhe was misdiagnosed with heart disease and declared physically unfit. ',
       'Since the founding of the People’s Republic of China, the number of medical institutions in\nChina has been extremely limited. Moreover, although the number has been increasing, most\nof them are small clinics, which also contributes to a generally low standard of medical care.',
     ],
-    src: chartImage,
     style: {
       left: '10vw',
       top: '10% ',
       width: '50vw',
-    },
-    bodyStyle: {
-      marginBottom: '3vh',
     },
   },
 ];

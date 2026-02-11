@@ -3,10 +3,8 @@
  * 与各 section / overlay 实际使用的 import 保持一致。
  */
 import s1bg from './assets/section1/background.png';
-import s1chart from './assets/section1/chart.png';
 import s1front from './assets/section1/frontend.png';
 import s2bg from './assets/section2/background.png';
-import s2chart from './assets/section2/chart.png';
 import s2front from './assets/section2/frontend.png';
 import s3bg from './assets/section3/background.png';
 import s3front from './assets/section3/frontend.png';
@@ -26,10 +24,8 @@ import weathered from './assets/weathered-layer.png';
 
 export const preloadUrls: string[] = [
   s1bg,
-  s1chart,
   s1front,
   s2bg,
-  s2chart,
   s2front,
   s3bg,
   s3front,
@@ -58,7 +54,7 @@ export function preloadImages(urls: string[]): Promise<void> {
           img.onload = () => resolve();
           img.onerror = () => resolve();
           img.src = url;
-        })
-    )
+        }),
+    ),
   ).then(() => undefined);
 }

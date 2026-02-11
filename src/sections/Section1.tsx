@@ -1,6 +1,5 @@
 import backgroundImage from '../assets/section1/background.png';
 import frontendImage from '../assets/section1/frontend.png';
-import chartImage from '../assets/section1/chart.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
 const Z = getSectionZLayers();
@@ -45,10 +44,6 @@ const SECTION1_TEXTS: SectionTextProps[] = [
       top: '18% ',
       width: '40vw',
     },
-    bodyStyle: {
-      marginBottom: '15vh',
-    },
-    src: chartImage,
   },
 ];
 
