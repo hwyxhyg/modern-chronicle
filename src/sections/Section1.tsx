@@ -40,7 +40,7 @@ const SECTION1_TEXTS: SectionTextProps[] = [
   {
     body: "China's total GDP ranks fifth globally, but due to its massive\npopulation, its GDP per capita ranks among the lowest in the\nworld.",
     style: {
-      right: '60vw',
+      right: '62vw',
       top: '18% ',
       width: '40vw',
     },

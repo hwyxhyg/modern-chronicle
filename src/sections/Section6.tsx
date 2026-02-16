@@ -14,12 +14,18 @@ const SECTION6_TEXTS: SectionTextProps[] = [
     body: [
       `At the same time, the “Up to the Mountains and Down to the Countryside”\nmovement unfolded. In 1969, the number of sent-down youth reached its\npeak, with 2.67 million young people relocated that year alone.`,
       `This political movement led to a continuous decline in the number of college\nstudents since 1961. Although the Chinese people were lifted out of illiteracy,\nit remained difficult for them to access higher education.`,
-      ` `,
-      `In 1977, the national college entrance examination—suspended for a decade—\nwas restored, reaffirmed as the core mechanism for selecting talent and advancing\nmodernization. Its reinstatement legally and institutionally restored citizens’\nright to access education through fair competition.`,
     ],
     style: {
       left: '10vw',
       top: '10% ',
+    },
+  },
+  {
+    body: 'In 1977, the national college entrance examination—suspended for a decade—\nwas restored, reaffirmed as the core mechanism for selecting talent and advancing\nmodernization. Its reinstatement legally and institutionally restored citizens’\nright to access education through fair competition.',
+    style: {
+      left: '145vw',
+      bottom: '25% ',
+      color: '#fff',
     },
   },
 ];
