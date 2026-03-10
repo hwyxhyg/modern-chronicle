@@ -1,167 +1,29 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Z_LAYERS } from '../constants/zIndex';
 import boatSvg from '../assets/boat.svg?url';
 
-gsap.registerPlugin(ScrollTrigger);
-
-const BOAT_LEFT_STABLE = 40; // vw
-const BOAT_EXIT_START_PROGRESS = 0.9; // 滚动进度超过此值时开始右移出
-const BOAT_WIDTH_VW = 10;
-// 小船垂直位置基于 section 实际高度的百分比：
-// - 前 6 个 section：20%
-// - 后 2 个 section：15%
-const BOAT_BOTTOM_RATIO_SECTION_1_6 = 0.2;
-const BOAT_BOTTOM_RATIO_SECTION_7_8 = 0.15;
-const AUTO_SCROLL_DURATION = 120;
-
 interface BoatProps {
-  containerRef: React.RefObject<HTMLDivElement | null>;
-  contentRef: React.RefObject<HTMLDivElement | null>;
+  style?: React.CSSProperties;
+  className?: string;
+  /**
+   * 可选：用于将实际 DOM 节点暴露给外层容器（如 HorizontalScroll）。
+   */
+  onMount?: (el: HTMLDivElement | null) => void;
 }
 
-const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
+const Boat: React.FC<BoatProps> = ({ style, className, onMount }) => {
   const boatRef = useRef<HTMLDivElement>(null);
-  const hasEnteredRef = useRef(false);
-  const entranceStartedRef = useRef(false);
-  const entranceRef = useRef<gsap.core.Tween | null>(null);
-  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
-  const autoScrollTweenRef = useRef<gsap.core.Tween | null>(null);
-  const shouldAutoScrollWhenEntranceDoneRef = useRef(false);
-  const verticalTweenRef = useRef<gsap.core.Tween | null>(null);
-  const sectionBoundsRef = useRef<{ start: number; end: number }[]>([]);
-  const currentSectionIndexRef = useRef(0);
-  const currentBottomRatioRef = useRef(BOAT_BOTTOM_RATIO_SECTION_1_6);
 
   useEffect(() => {
     const boat = boatRef.current;
-    const container = containerRef.current;
-    const content = contentRef.current;
+    if (!boat) return;
 
-    if (!boat || !container || !content) return;
-
-    // 仅包含各个 section（不含小船本身）的元素列表
-    const sectionElements = Array.from(content.children).filter(
-      (el) => el !== boat,
-    ) as HTMLElement[];
-
-    if (!sectionElements.length) return;
-
-    const recomputeSectionBounds = () => {
-      sectionBoundsRef.current = sectionElements.map((section) => {
-        const start = section.offsetLeft;
-        const width = section.offsetWidth;
-        return { start, end: start + width };
-      });
-    };
-
-    const findSectionIndexByX = (x: number) => {
-      const bounds = sectionBoundsRef.current;
-      for (let i = 0; i < bounds.length; i += 1) {
-        const { start, end } = bounds[i];
-        if (x >= start && x < end) return i;
+    const rafId = window.requestAnimationFrame(() => {
+      if (onMount) {
+        onMount(boatRef.current);
       }
-      return bounds.length ? bounds.length - 1 : 0;
-    };
-
-    const getBottomRatioForSection = (index: number) => {
-      // 约定：前 6 个 section（索引 0-5）为 20%，后 2 个为 15%
-      return index < 6
-        ? BOAT_BOTTOM_RATIO_SECTION_1_6
-        : BOAT_BOTTOM_RATIO_SECTION_7_8;
-    };
-
-    const updateBoatVerticalPosition = (
-      sectionIndex: number,
-      ratio: number,
-      immediate = false,
-    ) => {
-      const section = sectionElements[sectionIndex];
-      if (!section) return;
-
-      const frontend =
-        section.querySelector<HTMLElement>('.section-frontend');
-      if (!frontend) return;
-
-      const rect = frontend.getBoundingClientRect();
-      if (!rect.height) return;
-
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight || 0;
-      if (!viewportHeight) return;
-
-      // 在当前 section 内部，按高度百分比计算锚点位置：
-      // ratio = 0 表示贴底，1 表示贴顶
-      const anchorY = rect.bottom - rect.height * ratio; // 距离视口顶部的像素
-      const bottomPx = viewportHeight - anchorY; // 距离视口底部的像素
-
-      verticalTweenRef.current?.kill();
-      verticalTweenRef.current = gsap.to(boat, {
-        bottom: bottomPx,
-        duration: immediate ? 0 : 0.8,
-        ease: 'power2.out',
-      });
-    };
-
-    // 初始计算各 section 的水平范围
-    recomputeSectionBounds();
-
-    const getScrollWidth = () => {
-      const contentWidth = content.offsetWidth;
-      const viewportWidth = window.innerWidth;
-      return Math.max(0, contentWidth - viewportWidth);
-    };
-
-    const viewportW = window.innerWidth;
-    const stableLeftPx = (BOAT_LEFT_STABLE / 100) * viewportW;
-
-    const startAutoScroll = () => {
-      const st = scrollTriggerRef.current;
-      if (!st) return;
-      autoScrollTweenRef.current?.kill();
-      const startScroll = st.start;
-      const endScroll = st.end;
-      window.scrollTo({ top: startScroll, behavior: 'auto' });
-      const proxy = { y: startScroll };
-      const tween = gsap.to(proxy, {
-        y: endScroll,
-        duration: AUTO_SCROLL_DURATION,
-        ease: 'none',
-        onUpdate: () => {
-          window.scrollTo({ top: proxy.y, behavior: 'auto' });
-        },
-      });
-      autoScrollTweenRef.current = tween;
-    };
-
-    const createEntrance = () => {
-      entranceRef.current?.kill();
-      gsap.set(boat, { left: -0.3 * viewportW });
-      const entrance = gsap.to(boat, {
-        left: stableLeftPx,
-        duration: 2.2,
-        ease: 'power2.out',
-        onComplete: () => {
-          hasEnteredRef.current = true;
-          if (shouldAutoScrollWhenEntranceDoneRef.current) {
-            shouldAutoScrollWhenEntranceDoneRef.current = false;
-            startAutoScroll();
-          }
-        },
-      });
-      entranceRef.current = entrance;
-    };
-
-    // 初始位置：在左侧画面外，等横向区域进入视口后再执行入场
-    gsap.set(boat, { left: -0.3 * viewportW, bottom: 0 });
-    currentSectionIndexRef.current = 0;
-    currentBottomRatioRef.current = getBottomRatioForSection(0);
-    updateBoatVerticalPosition(
-      currentSectionIndexRef.current,
-      currentBottomRatioRef.current,
-      true,
-    );
+    });
 
     const sway = gsap.fromTo(
       boat,
@@ -176,110 +38,23 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
       },
     );
 
-    const st = ScrollTrigger.create({
-      trigger: container,
-      start: 'top top',
-      end: () => `+=${getScrollWidth()}`,
-      onLeaveBack: () => {
-        hasEnteredRef.current = false;
-        entranceStartedRef.current = false;
-      },
-      onUpdate: (self) => {
-        const p = self.progress;
-
-        // 刚进入横向区域（progress 接近 0）时启动一次入场动画，不依赖 onEnter（pin 可能导致 onEnter 不触发）
-        if (p < 0.01 && !entranceStartedRef.current) {
-          entranceStartedRef.current = true;
-          hasEnteredRef.current = false;
-          createEntrance();
-        }
-
-        if (!hasEnteredRef.current && self.direction !== 0 && entranceRef.current) {
-          entranceRef.current.kill();
-          entranceRef.current = null;
-          hasEnteredRef.current = true;
-        }
-        if (!hasEnteredRef.current) return;
-
-        const sw = getScrollWidth();
-        const vw = window.innerWidth;
-        const stablePx = (BOAT_LEFT_STABLE / 100) * vw;
-        const boatContentX = stablePx + p * sw;
-        if (p < BOAT_EXIT_START_PROGRESS) {
-          gsap.set(boat, { left: boatContentX });
-        } else {
-          const t =
-            (p - BOAT_EXIT_START_PROGRESS) / (1 - BOAT_EXIT_START_PROGRESS);
-          const leftAt09 = stablePx + BOAT_EXIT_START_PROGRESS * sw;
-          const leftAt1 = sw + vw + (BOAT_WIDTH_VW / 100) * vw;
-          gsap.set(boat, { left: leftAt09 + t * (leftAt1 - leftAt09) });
-        }
-
-        // 根据小船当前所处的 section，动态调整垂直高度（前 6 段 20%，后 2 段 15%）
-        const sectionIndex = findSectionIndexByX(boatContentX);
-        const targetRatio = getBottomRatioForSection(sectionIndex);
-
-        if (targetRatio !== currentBottomRatioRef.current) {
-          currentSectionIndexRef.current = sectionIndex;
-          currentBottomRatioRef.current = targetRatio;
-          updateBoatVerticalPosition(sectionIndex, targetRatio);
-        }
-      },
-    });
-    scrollTriggerRef.current = st;
-
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== 's' && e.key !== 'S') return;
-      e.preventDefault();
-      const tween = autoScrollTweenRef.current;
-      if (tween && tween.isActive()) {
-        if (tween.paused()) tween.play();
-        else tween.pause();
-        return;
-      }
-      shouldAutoScrollWhenEntranceDoneRef.current = true;
-      if (hasEnteredRef.current) {
-        shouldAutoScrollWhenEntranceDoneRef.current = false;
-        startAutoScroll();
-      } else if (!entranceRef.current) {
-        createEntrance();
-      }
-    };
-
-    const handleResize = () => {
-      recomputeSectionBounds();
-      const idx = currentSectionIndexRef.current;
-      const ratio = currentBottomRatioRef.current;
-      updateBoatVerticalPosition(idx, ratio, true);
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    window.addEventListener('keydown', handleKeyDown);
-
     return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      window.removeEventListener('resize', handleResize);
-      entranceRef.current?.kill();
-      entranceRef.current = null;
-      autoScrollTweenRef.current?.kill();
-      autoScrollTweenRef.current = null;
-      scrollTriggerRef.current = null;
-      verticalTweenRef.current?.kill();
-      verticalTweenRef.current = null;
       sway.kill();
-      st.kill();
+      window.cancelAnimationFrame(rafId);
     };
-  }, [containerRef, contentRef]);
+  }, [onMount]);
 
   return (
     <div
-      ref={boatRef}
-      className="pointer-events-none absolute flex items-end justify-center"
+      ref={(el) => {
+        boatRef.current = el;
+      }}
+      className={`pointer-events-none flex items-end justify-center ${
+        className ?? ''
+      }`}
       style={{
-        bottom: 0,
-        left: 0,
         zIndex: Z_LAYERS.BOAT,
+        ...style,
       }}
     >
       <img
@@ -293,3 +68,4 @@ const Boat: React.FC<BoatProps> = ({ containerRef, contentRef }) => {
 };
 
 export default Boat;
+

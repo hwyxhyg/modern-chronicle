@@ -2,6 +2,7 @@ import backgroundImage from '../assets/start/background.png';
 import { getSectionZLayers } from '../constants/zIndex';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
+import Boat from '../components/Boat';
 
 const Z = getSectionZLayers();
 
@@ -53,6 +54,13 @@ export default function Start() {
               width: '100%',
               height: 'auto',
               zIndex: Z.BACKGROUND,
+            }}
+          />
+          <Boat
+            className="absolute pointer-events-none"
+            style={{
+              left: '5vw',
+              bottom: '45%',
             }}
           />
           <div
