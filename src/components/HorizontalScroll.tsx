@@ -191,6 +191,12 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
         if (!boatEl) return;
 
         const p = self.progress;
+        const sw = getScrollWidth();
+
+        // 父级 wrapper 会整体向左平移 sw * p，这里给小船一个相反方向的水平位移，抵消父级 transform，保证视觉上水平位置固定
+        const boatCompensateX = p * sw;
+        gsap.set(boatEl, { x: boatCompensateX });
+
         if (p <= 0) {
           gsap.set(boatEl, { opacity: 0, scale: 0.8 });
           boatAppearedRef.current = false;
@@ -210,7 +216,6 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
           );
         }
 
-        const sw = getScrollWidth();
         const vw = window.innerWidth;
         const stablePx = (BOAT_LEFT_STABLE / 100) * vw;
         const boatContentX = stablePx + p * sw;
@@ -311,7 +316,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
           className="relative flex h-full will-change-transform"
           style={{ width: 'max-content' }}
         >
-          {/* 仅内容区参与宽度计算，ref 用于精确计算可滚动距离；Boat 放在 container 层，避免参与水平 transform */}
+          {/* 仅内容区参与宽度计算，ref 用于精确计算可滚动距离 */}
           <div
             ref={contentRef}
             className="flex h-full shrink-0"
@@ -321,14 +326,15 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
           </div>
           <CottonOverlay />
           <WeatheredOverlay />
+          {/* 小船放入与前景/内容相同的 stacking context 中，由 GSAP 抵消父级水平位移，保持视觉上固定 */}
+          <Boat
+            className="absolute left-[40vw] -translate-x-1/2 bottom-0 opacity-0"
+            onMount={(el: HTMLDivElement | null) => {
+              boatRef.current = el;
+            }}
+          />
         </div>
       </div>
-      <Boat
-        className="fixed left-[40vw] -translate-x-1/2 bottom-0 opacity-0"
-        onMount={(el: HTMLDivElement | null) => {
-          boatRef.current = el;
-        }}
-      />
     </div>
   );
 };
