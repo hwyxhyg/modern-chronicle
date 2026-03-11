@@ -1,4 +1,6 @@
+import React from 'react';
 import { Z_LAYERS } from '../constants/zIndex';
+import { Tooltip } from './Tooltip';
 
 /** 2K 基准宽度，用于相对字号：2560px 下 1rem ≈ 10px → 88px = 3.4375vw, 28px = 1.09375vw */
 const BASE_VIEWPORT_WIDTH = 2560;
@@ -25,6 +27,38 @@ export interface SectionTextProps {
 /** 以 2K 为基准的 vw 字号：px 值在 2560 宽下等效 */
 function pxToVw(px: number): string {
   return `${(px / BASE_VIEWPORT_WIDTH) * 100}vw`;
+}
+
+function renderAnnotatedLine(line: string): React.ReactNode {
+  const pattern = /\[\[(.+?)\|(.*?)\]\]/g;
+  const parts: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = pattern.exec(line)) !== null) {
+    const [raw, label, tooltipContent] = match;
+    const start = match.index;
+
+    if (start > lastIndex) {
+      parts.push(line.slice(lastIndex, start));
+    }
+
+    parts.push(
+      <Tooltip key={`${start}-${raw}`} content={tooltipContent}>
+        <span className="underline decoration-dotted underline-offset-2 cursor-help">
+          {label}
+        </span>
+      </Tooltip>,
+    );
+
+    lastIndex = start + raw.length;
+  }
+
+  if (lastIndex < line.length) {
+    parts.push(line.slice(lastIndex));
+  }
+
+  return parts.length > 0 ? parts : line;
 }
 
 /**
@@ -92,13 +126,13 @@ export default function SectionText({
                       textAlignLast: isLastLine ? 'left' : 'justify',
                     }}
                   >
-                    {line}
+                    {renderAnnotatedLine(line)}
                   </span>
                 );
               })
             : title.split('\n').map((line, i) => (
                 <span key={i} style={{ display: 'block' }}>
-                  {line}
+                  {renderAnnotatedLine(line)}
                 </span>
               ))}
         </h2>
@@ -119,11 +153,11 @@ export default function SectionText({
                           textAlignLast: isLastLine ? 'left' : 'justify',
                         }}
                       >
-                        {line}
+                        {renderAnnotatedLine(line)}
                       </span>
                     );
                   })
-                : para}
+                : renderAnnotatedLine(para)}
             </p>
           ))}
         </div>

@@ -20,7 +20,7 @@ const SECTION3_TEXTS: SectionTextProps[] = [
     body: [
       'A single sheet of diagnosis paper suddenly altered the course of his life.',
       'His dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.',
-      'Under such circumstances, after failing to enlist, Zhao returned home and accepted an\narranged marriage arranged by his parents, marrying a rural woman.',
+      'Under such circumstances, after failing to enlist, Zhao returned home and accepted an\n[[arranged marriage|Refers to a marital arrangement primarily decided by parents or families rather than the individuals involved. Although freedom of marriage was legally established in China in the 1950s, arranged marriages remained common in practice for decades.]] arranged by his parents, marrying a rural woman.',
     ],
     justify: false,
     style: {
@@ -29,14 +29,14 @@ const SECTION3_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: 'In China around the early 1950s, marriage choices were deeply shaped by family structures and\nsocial norms. Although the Marriage Law had legally established freedom of marriage and gender\nequality, arranged marriages and matchmakers remained widespread in everyday life.',
+    body: 'In China around the early 1950s, marriage choices were deeply shaped by family structures and\nsocial norms. Although [[the Marriage Law|The Marriage Law of 1950 was the first marriage legislation in the PRC, establishing freedom of marriage, monogamy, and gender equality, aiming to abolish arranged and feudal marriages.]] had legally established freedom of marriage and gender\nequality, arranged marriages and matchmakers remained widespread in everyday life.',
     style: {
       left: '5vw',
       bottom: '15% ',
     },
   },
   {
-    body: '“Reliability” and “stability”—being honest, mild-mannered, and aligned with family and \nsocial expectations—often outweighed personal emotion. “Good family background” and \n“political safety” became crucial, if unspoken, criteria.',
+    body: '“Reliability” and “stability”—being honest, mild-mannered, and aligned with family and \nsocial expectations—often outweighed personal emotion. “[[Good family background|Refers to the political and social classification of one\'s family (e.g., worker, peasant, landlord, capitalist), which used to strongly affect individuals\' life opportunities.]]” and \n“political safety” became crucial, if unspoken, criteria.',
     style: {
       left: '80vw',
       top: '20% ',

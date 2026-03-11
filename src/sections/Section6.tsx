@@ -12,7 +12,7 @@ const SECTION6_TEXTS: SectionTextProps[] = [
   {
     title: '1961-1977',
     body: [
-      `At the same time, the “Up to the Mountains and Down to the Countryside”\nmovement unfolded. In 1969, the number of sent-down youth reached its\npeak, with 2.67 million young people relocated that year alone.`,
+      `At the same time, the “[[_Up to the Mountains and Down to the Countryside_|The movement began in 1955 and peaked in the late 1960s, when national directives called for urban youth to be relocated to rural and frontier areas. Over 16 million young people were sent down, involving roughly one-tenth of China's urban population — one of the largest urban-to-rural migrations in modern history.]]”\nmovement unfolded. In 1969, the number of [[sent-down youth|Refers to the policy of transferring urban professionals, cadres, or intellectuals to rural areas for labor and ideological remolding — a common practice during political campaigns in Mao-era China.]] reached its\npeak, with 2.67 million young people relocated that year alone.`,
       `This political movement led to a continuous decline in the number of college\nstudents since 1961. Although the Chinese people were lifted out of illiteracy,\nit remained difficult for them to access higher education.`,
     ],
     style: {
@@ -21,7 +21,7 @@ const SECTION6_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: 'In 1977, the national college entrance examination—suspended for a decade—\nwas restored, reaffirmed as the core mechanism for selecting talent and advancing\nmodernization. Its reinstatement legally and institutionally restored citizens’\nright to access education through fair competition.',
+    body: 'In 1977, [[the national college entrance examination|China\'s nationwide standardized examination used to select students for higher education. Established in 1952, suspended in 1966, and reinstated in 1977, it serves as a central mechanism for merit-based selection and social mobility]]—suspended for a decade—\nwas restored, reaffirmed as the core mechanism for selecting talent and advancing\nmodernization. Its reinstatement legally and institutionally restored citizens’\nright to access education through fair competition.',
     style: {
       left: '145vw',
       bottom: '25% ',

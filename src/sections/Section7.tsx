@@ -12,7 +12,7 @@ const SECTION7_TEXTS: SectionTextProps[] = [
   {
     title: '1978-Now',
     body: [
-      `In 1978, China officially implemented the reform and opening-up policy, adopting a market economy\nand actively integrating into the world. `,
+      `In 1978, China officially implemented the [[Reform and Opening-up|The policies of domestic reform and opening to the outside world initiated after the Third Plenary Session of the 11th Central Committee in December 1978. Widely regarded as a pivotal turning point in China's modern trajectory.]] policy, adopting a market economy\nand actively integrating into the world. `,
       `From the 1980s onward, China entered a phase of rapid, development-oriented urbanization.Urban\nconstruction land expanded continuously, supporting industrial production, housing, and infrastructure,\nwhile absorbing growing population mobility. Cities became not only sites of production but also\nprimary spaces for personal careers and daily life.`,
     ],
     style: {
@@ -29,7 +29,7 @@ const SECTION7_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: `The tide of rapid urbanization has directly channeled the flow of people and talent unleashed\nby the Reform and Opening-up. This expansion of urban land does more than house industries\nand infrastructure; it serves as a foundation for those who migrated via the Gaokao to build their\ncareers and lives. Returning to his birthplace with childhood friends, Zhao Dachun marveled at\nthe new concrete avenues, the rising apartment blocks, and the rows of phoenix trees. His hometown\nhad shed its identity as a traditional rural settlement, transforming into a modern township.`,
+    body: `The tide of rapid urbanization has directly channeled the flow of people and talent unleashed\nby the [[Reform and Opening-up|The policies of domestic reform and opening to the outside world initiated after the Third Plenary Session of the 11th Central Committee in December 1978. Widely regarded as a pivotal turning point in China's modern trajectory.]]. This expansion of urban land does more than house industries\nand infrastructure; it serves as a foundation for those who migrated via the Gaokao to build their\ncareers and lives. Returning to his birthplace with childhood friends, Zhao Dachun marveled at\nthe new concrete avenues, the rising apartment blocks, and the rows of phoenix trees. His hometown\nhad shed its identity as a traditional rural settlement, transforming into a modern township.`,
     style: {
       left: '245vw',
       top: '10% ',
