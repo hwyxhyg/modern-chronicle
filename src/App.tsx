@@ -12,6 +12,7 @@ import Section5 from './sections/Section5';
 import Section6 from './sections/Section6';
 import Section7 from './sections/Section7';
 import Section8 from './sections/Section8';
+import End from './sections/End';
 import { preloadImages, preloadUrls } from './preloadAssets';
 
 const MIN_LOADING_MS = 1200;
@@ -96,6 +97,7 @@ function App() {
         <Section7 />
         <Section8 />
       </HorizontalScroll>
+      <End />
     </div>
   );
 }
