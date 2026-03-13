@@ -1,10 +1,12 @@
+import { useEffect, useRef, useState } from 'react';
 import backgroundImage from '../assets/section2/background.png';
 import frontendImage from '../assets/section2/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
-
-const Z = getSectionZLayers();
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
+import RainCanvas from '../components/RainCanvas';
+
+const Z = getSectionZLayers();
 
 const SECTION2_WIDTH = '200vw';
 
@@ -23,9 +25,42 @@ const SECTION2_TEXTS: SectionTextProps[] = [
   },
 ];
 
+function useSectionInView(threshold = 0.3) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
+
+  useEffect(() => {
+    const target = ref.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setInView(entry.isIntersecting && entry.intersectionRatio >= threshold);
+        });
+      },
+      {
+        root: null,
+        threshold,
+      },
+    );
+
+    observer.observe(target);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [threshold]);
+
+  return { ref, inView };
+}
+
 export default function Section2() {
+  const { ref, inView } = useSectionInView(0.4);
+
   return (
     <div
+      ref={ref}
       className="relative shrink-0 h-full"
       style={{ width: SECTION2_WIDTH, maxWidth: SECTION2_WIDTH }}
     >
@@ -46,6 +81,13 @@ export default function Section2() {
               width: '100%',
               height: 'auto',
               zIndex: Z.BACKGROUND,
+            }}
+          />
+          <RainCanvas
+            active={inView}
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              zIndex: Z.BACKGROUND + 1,
             }}
           />
           <img
