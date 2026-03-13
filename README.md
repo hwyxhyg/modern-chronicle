@@ -71,3 +71,27 @@ export default defineConfig([
   },
 ])
 ```
+
+## Static assets optimization
+
+Scripts compress PNGs and subset OTF fonts (Latin + digits), then overwrite originals. **Flow**: backup to `assets-backup/` → run optimization → overwrite files in place.
+
+- **PNG**: high compression (adaptive filtering + oxipng); default uses palette for ~30% size reduction. Use `--no-aggressive` for strict lossless only.
+- **Fonts**: subset and overwrite original `.otf` in place (no separate subset file).
+
+**Commands** (from project root):
+
+```bash
+npm run optimize:assets   # backup → optimize images + fonts → overwrite
+npm run optimize:images   # backup → PNG only
+npm run optimize:fonts    # backup → OTF only
+npm run optimize:reset    # restore from assets-backup/ to original paths
+```
+
+**Options** (after the script):
+
+- `--dry-run` — list files and estimated savings; no backup or writes.
+- `--root <path>` — only process under `<path>` (e.g. `src/assets`).
+- `--no-aggressive` — PNG: lossless only (no palette); smaller compression gain.
+
+**Reset**: run `npm run optimize:reset` to restore from `assets-backup/` to original locations. Backup is kept after restore so you can run reset again or compare.
