@@ -23,6 +23,16 @@ const SECTION2_TEXTS: SectionTextProps[] = [
       width: '50vw',
     },
   },
+  {
+    body: [
+      'A single sheet of diagnosis paper suddenly altered the course of his life.',
+      'His dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.',
+    ],
+    style: {
+      left: '120vw',
+      top: '15% ',
+    },
+  },
 ];
 
 function useSectionInView(threshold = 0.3) {
@@ -36,7 +46,9 @@ function useSectionInView(threshold = 0.3) {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setInView(entry.isIntersecting && entry.intersectionRatio >= threshold);
+          setInView(
+            entry.isIntersecting && entry.intersectionRatio >= threshold,
+          );
         });
       },
       {

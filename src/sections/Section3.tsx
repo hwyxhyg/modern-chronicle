@@ -18,8 +18,6 @@ const SECTION3_TEXTS: SectionTextProps[] = [
   },
   {
     body: [
-      'A single sheet of diagnosis paper suddenly altered the course of his life.',
-      'His dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.',
       'Under such circumstances, after failing to enlist, Zhao returned home and accepted an\n[[arranged marriage|Refers to a marital arrangement primarily decided by parents or families rather than the individuals involved. Although freedom of marriage was legally established in China in the 1950s, arranged marriages remained common in practice for decades.]] arranged by his parents, marrying a rural woman.',
     ],
     justify: false,
@@ -36,7 +34,7 @@ const SECTION3_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: '“Reliability” and “stability”—being honest, mild-mannered, and aligned with family and \nsocial expectations—often outweighed personal emotion. “[[Good family background|Refers to the political and social classification of one\'s family (e.g., worker, peasant, landlord, capitalist), which used to strongly affect individuals\' life opportunities.]]” and \n“political safety” became crucial, if unspoken, criteria.',
+    body: "“Reliability” and “stability”—being honest, mild-mannered, and aligned with family and \nsocial expectations—often outweighed personal emotion. “[[Good family background|Refers to the political and social classification of one's family (e.g., worker, peasant, landlord, capitalist), which used to strongly affect individuals' life opportunities.]]” and \n“political safety” became crucial, if unspoken, criteria.",
     style: {
       left: '80vw',
       top: '20% ',
