@@ -80,19 +80,20 @@ const RainCanvas: React.FC<RainCanvasProps> = ({ active, className, style }) => 
     handleResize();
 
     let resizeObserver: ResizeObserver | null = null;
-    if ('ResizeObserver' in window) {
+
+    if (typeof ResizeObserver !== 'undefined') {
       resizeObserver = new ResizeObserver(() => {
         handleResize();
       });
       resizeObserver.observe(container);
-    } else {
+    } else if (typeof window !== 'undefined') {
       window.addEventListener('resize', handleResize);
     }
 
     return () => {
       if (resizeObserver) {
         resizeObserver.disconnect();
-      } else {
+      } else if (typeof window !== 'undefined') {
         window.removeEventListener('resize', handleResize);
       }
     };
