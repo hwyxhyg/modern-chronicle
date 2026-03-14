@@ -90,6 +90,13 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       return Math.max(0, contentWidth - viewportWidth);
     };
 
+    // 整页最大滚动位置（Start + 横向 + End），用于自动播放全项目
+    const getMaxScroll = () =>
+      Math.max(
+        0,
+        document.documentElement.scrollHeight - window.innerHeight
+      );
+
     const recomputeSectionBounds = () => {
       const children = Array.from(content.children) as HTMLElement[];
       sectionElementsRef.current = children;
@@ -164,16 +171,27 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     recomputeSectionBounds();
 
     const startAutoScroll = () => {
-      const st = scrollTriggerRef.current;
-      if (!st) return;
       autoScrollTweenRef.current?.kill();
-      const startScroll = st.start;
-      const endScroll = st.end;
-      window.scrollTo({ top: startScroll, behavior: 'auto' });
-      const proxy = { y: startScroll };
+
+      const scrollWidth = getScrollWidth();
+      const maxScroll = getMaxScroll();
+      let startY = window.scrollY ?? document.documentElement.scrollTop;
+      if (startY >= maxScroll) startY = 0;
+
+      const endY = maxScroll;
+      const distance = endY - startY;
+      if (distance <= 0) return;
+
+      // 保持与横向区域相同的像素/秒：speed = scrollWidth / AUTO_SCROLL_DURATION
+      const duration =
+        scrollWidth > 0
+          ? (distance * AUTO_SCROLL_DURATION) / scrollWidth
+          : AUTO_SCROLL_DURATION;
+
+      const proxy = { y: startY };
       const tween = gsap.to(proxy, {
-        y: endScroll,
-        duration: AUTO_SCROLL_DURATION,
+        y: endY,
+        duration,
         ease: 'none',
         onUpdate: () => {
           window.scrollTo({ top: proxy.y, behavior: 'auto' });
