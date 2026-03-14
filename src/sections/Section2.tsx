@@ -98,9 +98,6 @@ export default function Section2() {
           <RainCanvas
             active={inView}
             className="absolute inset-0 pointer-events-none"
-            style={{
-              zIndex: Z.BACKGROUND + 1,
-            }}
           />
           <img
             src={frontendImage}

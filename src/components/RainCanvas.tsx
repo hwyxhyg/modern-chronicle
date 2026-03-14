@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from 'react';
+import { Z_LAYERS } from '../constants/zIndex';
 
 interface RainCanvasProps {
   active: boolean;
@@ -186,8 +187,7 @@ const RainCanvas: React.FC<RainCanvasProps> = ({ active, className, style }) => 
           anyVisible = true;
         }
 
-        // 参考 demo 使用偏冷的雨色，整体偏暗一点
-        ctx.strokeStyle = `rgba(174, 194, 224, ${drop.opacity})`;
+        ctx.strokeStyle = `rgba(69, 103, 102, ${drop.opacity})`;
         ctx.lineWidth = drop.lineWidth;
         ctx.beginPath();
         ctx.moveTo(drop.x, drop.y);
@@ -220,7 +220,7 @@ const RainCanvas: React.FC<RainCanvasProps> = ({ active, className, style }) => 
     <div
       ref={containerRef}
       className={className}
-      style={style}
+      style={{ ...style, zIndex: Z_LAYERS.RAIN }}
     >
       <canvas
         ref={canvasRef}

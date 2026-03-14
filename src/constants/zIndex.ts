@@ -7,6 +7,8 @@ export const Z_LAYERS = {
   BOAT: 30,
   /** 各 section 前景图层（插画等） */
   FRONTEND: 40,
+  /** 雨层：在 frontend 之上、滤镜之下 */
+  RAIN: 45,
   /** 文本 / 图表等内容层 */
   CONTENT: 50,
   /** 全局老旧滤镜层（weathered）：始终最上层 */
