@@ -18,7 +18,7 @@ const END_IMAGES = [img1, img2, img3, img4, img5, img6];
 // 文案占位：后续由文案填充 title/body
 const END_TEXT_PROPS: SectionTextProps = {
   body: [
-    `Zhao Dachun is ninety-two years old now and his life was like that of the "Aguafiel"\nin China, ordinary yet extraordinary.`,
+    `Afterword: Zhao Dachun is ninety-two years old now and his life was like that of the "Aguafiel"\nin China, ordinary yet extraordinary.`,
     ` `,
     `A chance encounter led us to his handwritten memoirs - pages that record more than\neighty years of trials and perseverance, mirroring the very arc of China’s modernization. `,
     ` `,
@@ -26,7 +26,7 @@ const END_TEXT_PROPS: SectionTextProps = {
     ` `,
     `His story is never just the story of one individual; it reflects the emotional landscape of\nan entire generation of Chinese people. `,
     ` `,
-    `Through this data visualization project, we revisited the path of China’s development over\nthe past eight decades, and presented before you a microcosm of Chinese modernization.`,
+    `We are deeply grateful for the trust shown by Mr. Zhao Dachun, his family, and their\nloved ones. We also extend our thanks to the relevant media and companies for their\ntechnical support. As Mr. Zhao himself wrote, "The warmth of the world is the true\nbond between people.`,
   ],
   style: {
     color: '#f5f5f5',
@@ -172,12 +172,28 @@ export default function End() {
                 justifyContent: 'center',
               }}
             >
-              <img
-                src={titleImg}
-                alt=""
-                className="block h-auto"
-                style={{ maxWidth: '80%' }}
-              />
+              <div
+                className="flex flex-col items-center"
+                style={{ width: '100%' }}
+              >
+                <img
+                  src={titleImg}
+                  alt=""
+                  className="block h-auto"
+                  style={{ maxWidth: '80%' }}
+                />
+                <p
+                  className="text-center mt-2"
+                  style={{
+                    color: '#f5f5f5',
+                    fontSize: '0.9rem',
+                    maxWidth: '80%',
+                  }}
+                >
+                  Zhao's handwriting: "The warmth of the world is the true bond
+                  between people."
+                </p>
+              </div>
             </div>
 
             <div

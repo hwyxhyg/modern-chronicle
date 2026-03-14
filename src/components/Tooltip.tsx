@@ -57,7 +57,6 @@ export const Tooltip: React.FC<TooltipProps> = ({
             position: strategy,
             top: y ?? 0,
             left: x ?? 0,
-            fontFamily: "'Huiwen-mincho', serif",
             fontSize: pxToVw(26),
             lineHeight: 1.6,
             minWidth: '22vw',

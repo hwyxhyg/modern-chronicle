@@ -100,7 +100,6 @@ export default function SectionText({
       className="absolute w-full max-w-full"
       style={{
         zIndex: Z_LAYERS.CONTENT,
-        fontFamily: "'Huiwen-mincho', serif",
         color: '#000', // 默认黑色，可被 style 中的 color 覆盖
         ...style,
       }}
@@ -163,9 +162,7 @@ export default function SectionText({
         </div>
       )}
       {hasSrc && (
-        <div
-          style={srcStyle}
-        >
+        <div style={srcStyle}>
           <img src={src} alt="" className="block w-full h-auto" />
         </div>
       )}
