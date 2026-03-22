@@ -4,6 +4,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Boat from './Boat';
 import CottonOverlay from './CottonOverlay';
 import WeatheredOverlay from './WeatheredOverlay';
+import {
+  getViewportHeight,
+  getViewportWidth,
+  subscribeViewportResize,
+} from '../utils/viewport';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -64,8 +69,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
      * - 超过视口：添加 .section-frontend--bottom，贴底，仅裁剪上方
      */
     const updateFrontendAlign = () => {
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight || 0;
+      const viewportHeight = getViewportHeight();
       if (!viewportHeight) return;
 
       const frontends =
@@ -86,7 +90,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     // 可滚动距离 = 内容总宽 - 视口宽（只用 content 的宽度，不包含 overlay）
     const getScrollWidth = () => {
       const contentWidth = content.offsetWidth;
-      const viewportWidth = window.innerWidth;
+      const viewportWidth = getViewportWidth();
       return Math.max(0, contentWidth - viewportWidth);
     };
 
@@ -94,7 +98,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     const getMaxScroll = () =>
       Math.max(
         0,
-        document.documentElement.scrollHeight - window.innerHeight
+        document.documentElement.scrollHeight - getViewportHeight()
       );
 
     const recomputeSectionBounds = () => {
@@ -136,8 +140,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       const rect = frontend.getBoundingClientRect();
       if (!rect.height) return;
 
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight || 0;
+      const viewportHeight = getViewportHeight();
       if (!viewportHeight) return;
 
       const anchorY = rect.bottom - rect.height * ratio; // 距离视口顶部的像素
@@ -234,7 +237,7 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
           );
         }
 
-        const vw = window.innerWidth;
+        const vw = getViewportWidth();
         const stablePx = (BOAT_LEFT_STABLE / 100) * vw;
         const boatContentX = stablePx + p * sw;
 
@@ -256,6 +259,40 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
     });
     scrollTriggerRef.current = boatScrollTrigger;
 
+    /** resize / refresh 后补一次小船位置（onUpdate 在 progress 不变时可能不触发） */
+    const syncBoatAfterLayout = () => {
+      const boatEl = boatRef.current;
+      const st = scrollTriggerRef.current;
+      if (!boatEl || !st) return;
+
+      const p = st.progress;
+      const sw = getScrollWidth();
+      gsap.set(boatEl, { x: p * sw });
+
+      if (p <= 0) {
+        gsap.set(boatEl, { opacity: 0, scale: 0.8 });
+        boatAppearedRef.current = false;
+        return;
+      }
+
+      const vw = getViewportWidth();
+      const stablePx = (BOAT_LEFT_STABLE / 100) * vw;
+      const boatContentX = stablePx + p * sw;
+      const sectionIndex = findSectionIndexByX(boatContentX);
+      const targetRatio = getBottomRatioForSection(sectionIndex);
+      currentSectionIndexRef.current = sectionIndex;
+      currentBottomRatioRef.current = targetRatio;
+      updateBoatVerticalPosition(sectionIndex, targetRatio, true);
+    };
+
+    const runLayoutSync = () => {
+      updateFrontendAlign();
+      updateSectionHeight();
+      recomputeSectionBounds();
+      ScrollTrigger.refresh();
+      syncBoatAfterLayout();
+    };
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key !== 's' && e.key !== 'S') return;
       e.preventDefault();
@@ -268,42 +305,47 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
       startAutoScroll();
     };
 
-    // 窗口大小改变时刷新 ScrollTrigger
-    const handleResize = () => {
-      ScrollTrigger.refresh();
-      updateSectionHeight();
-      updateFrontendAlign();
-      recomputeSectionBounds();
-      const idx = currentSectionIndexRef.current;
-      const ratio = currentBottomRatioRef.current;
-      const st = scrollTriggerRef.current;
-      if (st && st.progress > 0) {
-        updateBoatVerticalPosition(idx, ratio, true);
-      }
+    let resizeRafId = 0;
+    const scheduleLayoutSync = () => {
+      if (resizeRafId) cancelAnimationFrame(resizeRafId);
+      resizeRafId = requestAnimationFrame(() => {
+        resizeRafId = 0;
+        runLayoutSync();
+      });
     };
 
-    window.addEventListener('resize', handleResize);
+    const unsubscribeViewport = subscribeViewportResize(scheduleLayoutSync);
     window.addEventListener('keydown', handleKeyDown);
 
     // 首帧与资源加载后用实际布局刷新
     const refreshId = requestAnimationFrame(() => {
-      ScrollTrigger.refresh();
-      updateSectionHeight();
-      updateFrontendAlign();
-      recomputeSectionBounds();
+      runLayoutSync();
     });
     const timeoutId = window.setTimeout(() => {
-      ScrollTrigger.refresh();
-      updateSectionHeight();
-      updateFrontendAlign();
-      recomputeSectionBounds();
+      runLayoutSync();
     }, 300);
+
+    // 内容尺寸变化（如图片加载）；debounce 避免与 pin/refresh 互相触发时振荡
+    let roDebounceId = 0;
+    const resizeObserver =
+      typeof ResizeObserver !== 'undefined'
+        ? new ResizeObserver(() => {
+            window.clearTimeout(roDebounceId);
+            roDebounceId = window.setTimeout(() => {
+              scheduleLayoutSync();
+            }, 120);
+          })
+        : null;
+    resizeObserver?.observe(content);
 
     // 清理函数
     return () => {
-      window.removeEventListener('resize', handleResize);
+      unsubscribeViewport();
+      window.clearTimeout(roDebounceId);
+      resizeObserver?.disconnect();
       window.removeEventListener('keydown', handleKeyDown);
       cancelAnimationFrame(refreshId);
+      if (resizeRafId) cancelAnimationFrame(resizeRafId);
       window.clearTimeout(timeoutId);
       autoScrollTweenRef.current?.kill();
       autoScrollTweenRef.current = null;
@@ -323,11 +365,10 @@ const HorizontalScroll: React.FC<HorizontalScrollProps> = ({
   return (
     <div
       ref={containerRef}
-      className={`relative w-screen h-screen overflow-hidden flex items-center justify-center ${className}`}
+      className={`relative w-screen h-dvh min-h-dvh overflow-hidden flex items-center justify-center ${className}`}
     >
       <div
-        className="relative w-full min-w-0 overflow-hidden shrink-0"
-        style={{ height: '100vh' }}
+        className="relative w-full min-w-0 overflow-hidden shrink-0 h-dvh"
       >
         <div
           ref={wrapperRef}

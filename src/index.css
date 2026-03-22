@@ -11,6 +11,8 @@ html {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  /* 竖/横向滚动条出现时预留槽位，减轻「条出现 → 视口高度变矮 → 内容被挤」的跳变 */
+  scrollbar-gutter: stable;
 }
 
 body {

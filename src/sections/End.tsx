@@ -118,7 +118,7 @@ export default function End() {
 
   return (
     <div
-      className="relative w-screen h-screen overflow-hidden flex"
+      className="relative w-screen h-dvh min-h-dvh overflow-hidden flex"
       style={{ backgroundColor: '#01417c' }}
     >
       <div

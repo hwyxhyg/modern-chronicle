@@ -14,6 +14,10 @@ import Section7 from './sections/Section7';
 import Section8 from './sections/Section8';
 import End from './sections/End';
 import { preloadImages, preloadUrls } from './preloadAssets';
+import {
+  getViewportHeight,
+  subscribeViewportResize,
+} from './utils/viewport';
 
 const MIN_LOADING_MS = 1200;
 
@@ -42,35 +46,39 @@ function App() {
     const startEl = startRef.current;
     if (!startEl) return;
 
-    const viewportHeight =
-      window.innerHeight || document.documentElement.clientHeight || 0;
-    if (!viewportHeight) return;
+    if (!getViewportHeight()) return;
 
     const tween = gsap.fromTo(
       startEl,
       { y: 0, opacity: 1 },
       {
-        y: -viewportHeight,
+        y: () => -getViewportHeight(),
         opacity: 0,
         ease: 'none',
         scrollTrigger: {
           trigger: startEl,
           start: 'top top',
-          end: () => `+=${viewportHeight}`,
+          end: () => `+=${getViewportHeight()}`,
           scrub: 1,
           invalidateOnRefresh: true,
         },
       },
     );
 
-    const handleResize = () => {
-      ScrollTrigger.refresh();
+    let rafId = 0;
+    const handleViewportChange = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        rafId = 0;
+        ScrollTrigger.refresh();
+      });
     };
 
-    window.addEventListener('resize', handleResize);
+    const unsubscribe = subscribeViewportResize(handleViewportChange);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
+      unsubscribe();
+      if (rafId) cancelAnimationFrame(rafId);
       tween.kill();
     };
   }, []);
@@ -80,10 +88,10 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden">
+    <div className="min-h-dvh bg-black overflow-x-hidden">
       <div
         ref={startRef}
-        className="w-screen h-screen flex items-center justify-center overflow-hidden"
+        className="w-screen h-dvh min-h-dvh flex items-center justify-center overflow-hidden"
       >
         <Start />
       </div>
