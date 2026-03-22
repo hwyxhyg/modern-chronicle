@@ -1,10 +1,19 @@
+import { useLayoutEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 import backgroundImage from '../assets/start/background.png';
 import { getSectionZLayers } from '../constants/zIndex';
+import { Z_LAYERS } from '../constants/zIndex';
 import SectionText from '../components/SectionText';
 import type { SectionTextProps } from '../components/SectionText';
 import Boat from '../components/Boat';
+import {
+  resolveStartAssetUrl,
+  startBirdsConfig,
+} from './startBirdsConfig';
 
 const Z = getSectionZLayers();
+/** 介于 BACKGROUND 与 BOAT 之间，与背景同坐标系 */
+const START_BIRDS_Z = 15;
 
 const START_WIDTH = '100vw';
 
@@ -32,8 +41,94 @@ const START_TEXTS: SectionTextProps[] = [
 ];
 
 export default function Start() {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const { width: designW, height: designH, imgs: birdImgs } = startBirdsConfig;
+
+  useLayoutEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const ctx = gsap.context(() => {
+      const birds = gsap.utils.toArray<HTMLElement>(
+        root.querySelectorAll('.start-bird'),
+      );
+      if (birds.length === 0) return;
+
+      gsap.set(birds, {
+        opacity: 0,
+        y: 20,
+        scale: 0.94,
+        transformOrigin: '50% 50%',
+      });
+
+      const enterDur = 1.15;
+      const staggerGap = 0.26;
+      const breathScale = 1.045;
+      const breathInOutDur = 1.35;
+      const breathPulses = 2;
+
+      const tl = gsap.timeline({ paused: true });
+      birds.forEach((bird, i) => {
+        const one = gsap.timeline();
+        one
+          .fromTo(
+            bird,
+            { opacity: 0, y: 22, scale: 0.93 },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: enterDur,
+              ease: 'power3.out',
+            },
+          )
+          .to(bird, {
+            scale: breathScale,
+            duration: breathInOutDur,
+            ease: 'sine.inOut',
+            yoyo: true,
+            repeat: breathPulses,
+          });
+        tl.add(one, i * staggerGap);
+      });
+
+      const resetBirds = () => {
+        tl.pause(0);
+        gsap.set(birds, {
+          opacity: 0,
+          y: 20,
+          scale: 0.94,
+        });
+      };
+
+      const playWhenVisible = (visible: boolean) => {
+        if (visible) {
+          tl.restart();
+        } else {
+          resetBirds();
+        }
+      };
+
+      const io = new IntersectionObserver(
+        ([entry]) => {
+          if (!entry) return;
+          playWhenVisible(entry.isIntersecting);
+        },
+        { root: null, threshold: 0.08 },
+      );
+      io.observe(root);
+
+      return () => {
+        io.disconnect();
+      };
+    }, root);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div
+      ref={rootRef}
       className="relative shrink-0 h-full"
       style={{ width: START_WIDTH, maxWidth: START_WIDTH }}
     >
@@ -56,11 +151,37 @@ export default function Start() {
               zIndex: Z.BACKGROUND,
             }}
           />
+          <div
+            className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden"
+            style={{ zIndex: START_BIRDS_Z }}
+            aria-hidden
+          >
+            {birdImgs.map((bird, i) => (
+              <div
+                key={`${bird.url}-${i}`}
+                className="start-bird absolute"
+                style={{
+                  left: `${(bird.x / designW) * 100}%`,
+                  top: `${(bird.y / designH) * 100}%`,
+                  width: `${(bird.width / designW) * 100}%`,
+                  height: `${(bird.height / designH) * 100}%`,
+                }}
+              >
+                <img
+                  src={resolveStartAssetUrl(bird.url)}
+                  alt=""
+                  className="max-w-none w-full h-full object-contain"
+                  draggable={false}
+                />
+              </div>
+            ))}
+          </div>
           <Boat
             className="absolute pointer-events-none"
             style={{
               left: '5vw',
               bottom: '45%',
+              zIndex: Z_LAYERS.BOAT,
             }}
           />
           <div
