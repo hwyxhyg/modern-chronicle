@@ -1,4 +1,4 @@
-import backgroundImage from '../assets/section8/background.png';
+﻿import backgroundImage from '../assets/section8/background.png';
 import frontendImage from '../assets/section8/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
@@ -10,35 +10,32 @@ const SECTION8_WIDTH = '200vw';
 
 const SECTION8_TEXTS: SectionTextProps[] = [
   {
-    title: '1978-Now',
+    title: '1978-至今',
     style: {
       left: '10vw',
       top: '10% ',
     },
-  },
-  {
-    body: `Zhao Dachun’s life is like a tree passing through the seasons—taking root in the\nchill of early spring,stretching through the heat of summer,and bearing fruit in\nautumn.He endured famine,misdiagnosis, separation, and an unjust marriage. He once\nfell into spiritual winter.Yet again and again—through collective movements, through\ncracks in institutions, through the kindness of others—he rediscovered warmth, held\nfast to conscience, and carved his own path.`,
+  }, {
+    body: `赵大春的一生，正如一棵经历四季更迭的树——在初春的微寒中扎根，\n在盛夏的酷暑里舒展，在金秋的时节里结果。他曾历经饥荒、遭遇误诊、\n承受离别，也曾向一段不合适的婚姻妥协。他曾一度陷入精神的寒冬，\n然而一次又一次，在集体的巨变中，在体制的缝隙里，在他人释放的善意中，\n他重新找到了温度。他始终坚守着良知，并在荆棘中蹚出了属于自己的路。`, 
     style: {
       left: '150vw',
       top: '10% ',
       color: '#fff',
     },
-  },
-  {
-    body: `Time will change. Systems will shift. Landscapes will transform. But the genuine bonds\nbetween people remain the softest anchor across time. This world is worth cherishing,\nultimately because— there are still people like Zhao Dachun, and because there remains\na light of warmth that has not been extinguished.`,
+  }, {
+    body: `时代在变迁，体制在更迭，山河在改貌。然而，人与人之间真挚的纽带，\n始终是跨越漫长岁月中那处最柔软的锚。这个世界终究值得我们去热爱，\n因为这里依然有像赵大春一样赤诚生活着的人，因为这里，依旧留存着\n一束未曾熄灭的、温暖的光。`, 
     style: {
       left: '150vw',
       bottom: '15% ',
       color: '#fff',
     },
-  },
-];
+  }];
 
 export default function Section8() {
   return (
     <div
       className="relative shrink-0 h-full"
-      style={{ width: SECTION8_WIDTH, maxWidth: SECTION8_WIDTH }}
+      style={{ width: SECTION8_WIDTH,  maxWidth: SECTION8_WIDTH }}
     >
       <div className="relative w-full h-full flex items-center">
         <div className="relative w-full">
@@ -56,7 +53,7 @@ export default function Section8() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.BACKGROUND,
+              zIndex: Z.BACKGROUND, 
             }}
           />
           <img
@@ -68,7 +65,7 @@ export default function Section8() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.FRONTEND,
+              zIndex: Z.FRONTEND, 
             }}
           />
           <div

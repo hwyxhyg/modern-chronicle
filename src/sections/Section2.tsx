@@ -14,23 +14,23 @@ const SECTION2_TEXTS: SectionTextProps[] = [
   {
     title: '1949-1957',
     body: [
-      'In 1952, Zhao Dachun signed up to join the army. During the selection medical examination,\nhe was misdiagnosed with heart disease and declared physically unfit. ',
-      'Since the founding of the People’s Republic of China, the number of medical institutions in\nChina has been extremely limited. Moreover, although the number has been increasing, most\nof them are small clinics, which also contributes to a generally low standard of medical care.',
+      '1952年，赵大春报名参军。然而在体检中，他被误诊为心脏病，并被判定为\n身体不合格。',
+      '新中国成立初期，全国的医疗机构凤毛麟角。1949年，中国有5.42亿人口，而全国\n的卫生机构却仅仅只有3670所。这意味着，平均每接近15万中国人\n才拥有一家卫生机构。真正具备系统诊疗能力、能做严谨复核的医院\n\n更是凤毛麟角。1952年，虽然中国基层的医疗机构正在逐步发展，但专业的医疗保障增长仍然\n相当有限。',
     ],
     style: {
       left: '10vw',
-      top: '10% ',
-      width: '50vw',
+      top: '5% ',
+      width: '60vw',
     },
   },
   {
     body: [
-      'A single sheet of diagnosis paper suddenly altered the course of his life.',
-      'His dream of joining the army was shattered. He fell into prolonged depression and, in\nthis despondency, parted ways with his first love, Fang Fang.',
+      '这一纸轻飘飘却重逾千斤的诊断书，猝然改写了他的人生轨迹。',
+      '参军无望，他陷入了漫长的消沉与低谷。而在那段灰暗的日子里，\n命运的捉弄接踵而至，他也与自己的初恋女友——芳芳，\n最终走到了缘分的尽头。',
     ],
     style: {
       left: '120vw',
-      top: '15% ',
+      top: '18% ',
     },
   },
 ];

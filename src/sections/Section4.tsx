@@ -1,4 +1,4 @@
-import backgroundImage from '../assets/section4/background.png';
+﻿import backgroundImage from '../assets/section4/background.png';
 import frontendImage from '../assets/section4/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
@@ -11,51 +11,45 @@ const SECTION4_WIDTH = '300vw';
 const SECTION4_TEXTS: SectionTextProps[] = [
   {
     title: '1957-1961',
-    body: 'Natural disasters and human calamities followed one\nafter another; separations by life and death were\nunpredictable. During this dark period, a large number\nof Chinese people died from starvation.',
+    body: '天灾与人祸接踵而至，生离死别变得毫无预兆。',
     style: {
       left: '8vw',
       top: '10% ',
     },
-  },
-  {
+  }, {
     title: '1957-1961',
     style: {
       left: '110vw',
       top: '10% ',
     },
-  },
-  {
-    body: `In the late 1950s, amid political struggles within the Party, the errors of the\n"[[Great Leap Forward|An economic campaign (1958–1960) aimed at rapid industrialization and agricultural collectivization. Unrealistic targets and exaggerated reporting led to severe economic difficulties.]]" and the "[[Anti-Rightist Deviation|A political campaign (1959) against "right opportunism" that interrupted efforts to correct existing leftist errors in economic terms, allowing those mistakes to persist for a longer period.]]" campaign laid the\ngroundwork for exaggerated agricultural production claims. From 1959 to 1961,\n[[the Three Years of Natural Disasters|Refers to a period of hardship experienced by China from 1959 to 1961.During this time, the country was affected by consecutive natural disasters such as droughts and floods, and suffered from severe food shortages and economic difficulties.]] combined with the Soviet government's\nperfidious tearing up of contracts, caused severe difficulties in China's national\neconomy, inflicting major losses on thecountry and its people.`,
+  }, {
+    body: `50年代末，受当时政治环境的影响，“大跃进”的失误与“反右倾”\n运动的蔓延，为农业产值的虚报浮夸埋下了伏笔。1959至1961年间，\n三年困难时期骤至，加之苏联政府突然撕毁经济合同，多重不利因素\n交织在一起，让国民经济一度陷入了严重困难的境地。`, 
     style: {
       left: '140vw',
       top: '10% ',
     },
-  },
-  {
-    body: `Hand-writing letter by Zhao Dachun`,
+  }, {
+    body: `赵大春先生亲笔信`,
     style: {
       left: '140vw',
       bottom: '25% ',
     },
-  },
-  {
+  }, {
     body: [
-      `During this period, Zhao Dachun lost both of his parents. In his memoir, written in the third person, \nhe recalls:“At the train station, he repeatedly urged his mother that if things became difficult after\nreturning home, she must come again.`,
-      `But just over a month later, the bad news arrived—his father had passed away. When he saw the grave,\nhe broke down in tears, unable to understand why it had happened so quickly…He had thought that with\naccess to food at the [[communal canteen|Refers to the collective dining system established in rural People's Communes in the late 1950s. Food was prepared and distributed through public mess halls, reflecting the highly collectivized mode of production and daily life at the time.]], and with the supplies he had brought this time, they would be\nfine for a while.”`,
-      `Yet in the face of such calamity, there was nothing he could do.`,
-    ],
-    style: {
+      `在那段日子里，赵大春的双亲相继离世。他以第三人称在回忆录中这样写道：`,
+      `“在火车站，他反复叮嘱母亲，如果回乡后日子实在过不下去，就一定要再搬过来。\n然而短短一个多月后，噩耗传来——父亲已经撒手人寰。站在坟前，他失声痛哭，\n无论如何也想不通为什么一切会发生得这么快……他原本以为，既然公共食堂能吃上\n饭，再加上自己这次带回来的物资，家里总能勉强支撑一阵子。”`,
+      `然而，面对时代灾厄，个体的努力终究如螳臂当车。`, 
+    ], style: {
       left: '240vw',
       top: '10% ',
     },
-  },
-];
+  }];
 
 export default function Section4() {
   return (
     <div
       className="relative shrink-0 h-full"
-      style={{ width: SECTION4_WIDTH, maxWidth: SECTION4_WIDTH }}
+      style={{ width: SECTION4_WIDTH,  maxWidth: SECTION4_WIDTH }}
     >
       <div className="relative w-full h-full flex items-center">
         <div className="relative w-full">
@@ -73,7 +67,7 @@ export default function Section4() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.BACKGROUND,
+              zIndex: Z.BACKGROUND, 
             }}
           />
           <img
@@ -85,7 +79,7 @@ export default function Section4() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.FRONTEND,
+              zIndex: Z.FRONTEND, 
             }}
           />
           <div

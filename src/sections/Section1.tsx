@@ -17,28 +17,28 @@ const SECTION1_TEXTS: SectionTextProps[] = [
     },
   },
   {
-    body: 'At the dawn of an era, all things await revival.\nAgainst this backdrop, love, health, and marriage\nwere rarely matters of personal will.',
+    body: '这是一个时代的黎明，万物静待复苏。\n在这样的背景下，个体的爱情、健康与婚姻，\n往往由不得自己抉择。',
     style: {
       left: '5vw',
       top: '18% ',
     },
   },
   {
-    body: 'In 1949, the People’s Republic of China had just been founded. Institutions were still under construction, \nresources were extremely scarce, and everything awaited recovery. Compared with Europe and the United\nStates, China’s per capita income, medical resources, and infrastructure were at very low levels.\nThe urban–rural divide was stark, public services were limited, and individual life choices were profoundly\nconstrained by conditions of survival and institutional structures.',
+    body: '1949年，中华人民共和国刚刚成立。彼时，各项制度百废待兴，资源极度匮乏，一切都在\n艰难中走向重建。与欧美国家相比，当时中国的人均收入、医疗资源和基础设施都处于\n极低的水平。城乡鸿沟如一道天堑，公共服务捉襟见肘，个体的命运与生活选择，被深深\n地禁锢在匮乏的生存条件与刚性的体制结构之中。',
     style: {
       left: '40vw',
       top: '18% ',
     },
   },
   {
-    body: 'Zhao Da chun was born in 1934. Like a small boat, an individual life set\nsail amid the vast ocean of history. ',
+    body: '1934年，赵大春出生。像一艘小船，这个平凡的生命\n在时代的汪洋中沉浮、启航，驶入了波澜壮阔的历史洪流。',
     style: {
       left: '105vw',
       top: '18% ',
     },
   },
   {
-    body: "China's total GDP ranks fifth globally, but due to its massive\npopulation, its GDP per capita ranks among the lowest in the\nworld.",
+    body: '彼时，中国的GDP总量虽位居全球第五，\n但庞大的人口基数，使得人均GDP依然定格在世界的尾部。',
     style: {
       right: '62vw',
       top: '18% ',
@@ -54,16 +54,16 @@ export default function Section1() {
       style={{ width: SECTION1_WIDTH, maxWidth: SECTION1_WIDTH }}
     >
       <div className="relative w-full h-full flex items-center">
-        {/* 画面容器：尺寸与前景/背景图片一致 */}
+        {/* 画面容器:尺寸与前景/背景图片一致 */}
         <div className="relative w-full">
-          {/* 幽灵图：不可见，但用于撑开容器高度，使其与图片真实尺寸一致 */}
+          {/* 幽灵图:不可见, 但用于撑开容器高度, 使其与图片真实尺寸一致 */}
           <img
             src={backgroundImage}
             alt=""
             aria-hidden
             className="block w-full h-auto pointer-events-none invisible"
           />
-          {/* 背景图层：与前景共用垂直对齐逻辑 */}
+          {/* 背景图层:与前景共用垂直对齐逻辑 */}
           <img
             src={backgroundImage}
             alt=""
@@ -88,7 +88,7 @@ export default function Section1() {
               zIndex: Z.FRONTEND,
             }}
           />
-          {/* 内容层：文字 / 图表，相对画面容器定位 */}
+          {/* 内容层:文字 / 图表, 相对画面容器定位 */}
           <div
             className="absolute top-0 left-0 w-full h-full"
             style={{ zIndex: Z.CONTENT }}

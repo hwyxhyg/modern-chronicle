@@ -1,4 +1,4 @@
-import backgroundImage from '../assets/section3/background.png';
+﻿import backgroundImage from '../assets/section3/background.png';
 import frontendImage from '../assets/section3/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
@@ -15,38 +15,33 @@ const SECTION3_TEXTS: SectionTextProps[] = [
       left: '5vw',
       top: '10% ',
     },
-  },
-  {
+  }, {
     body: [
-      'Under such circumstances, after failing to enlist, Zhao returned home and accepted an\n[[arranged marriage|Refers to a marital arrangement primarily decided by parents or families rather than the individuals involved. Although freedom of marriage was legally established in China in the 1950s, arranged marriages remained common in practice for decades.]] arranged by his parents, marrying a rural woman.',
-    ],
+      '在这样的境遇下，消沉的赵大春回到了家乡。\n最终，他接受了父母之命、媒妁之言，与一位农村姑娘结了婚。'],
     justify: false,
     style: {
       left: '5vw',
       top: '20% ',
     },
-  },
-  {
-    body: 'In China around the early 1950s, marriage choices were deeply shaped by family structures and\nsocial norms. Although [[the Marriage Law|The Marriage Law of 1950 was the first marriage legislation in the PRC, establishing freedom of marriage, monogamy, and gender equality, aiming to abolish arranged and feudal marriages.]] had legally established freedom of marriage and gender\nequality, arranged marriages and matchmakers remained widespread in everyday life.',
+  }, {
+    body: '20世纪50年代初期，中国的婚姻选择深受家族结构与社会规范的裹挟。\n尽管《婚姻法》在法律层面上确立了婚姻自由与男女平等，但在日常生活的\n细节里，包办婚姻与媒妁之言依然根深蒂固。',
     style: {
       left: '5vw',
       bottom: '15% ',
     },
-  },
-  {
-    body: "“Reliability” and “stability”—being honest, mild-mannered, and aligned with family and \nsocial expectations—often outweighed personal emotion. “[[Good family background|Refers to the political and social classification of one's family (e.g., worker, peasant, landlord, capitalist), which used to strongly affect individuals' life opportunities.]]” and \n“political safety” became crucial, if unspoken, criteria.",
+  }, {
+    body: '在当时的择偶标准中，个人的情感往往要让位于“可靠性”与“稳定性”\n——是否老实本分、性格温和、是否符合家庭与社会的期待，往往更具\n决定性意义。“家庭成分好”、“政治上无风险”，成了人们心中秘而不宣、\n却决定生死的隐性硬标准。',
     style: {
       left: '80vw',
       top: '20% ',
     },
-  },
-];
+  }];
 
 export default function Section3() {
   return (
     <div
       className="relative shrink-0 h-full"
-      style={{ width: SECTION3_WIDTH, maxWidth: SECTION3_WIDTH }}
+      style={{ width: SECTION3_WIDTH,  maxWidth: SECTION3_WIDTH }}
     >
       <div className="relative w-full h-full flex items-center">
         <div className="relative w-full">
@@ -64,7 +59,7 @@ export default function Section3() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.BACKGROUND,
+              zIndex: Z.BACKGROUND, 
             }}
           />
           <img
@@ -76,7 +71,7 @@ export default function Section3() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.FRONTEND,
+              zIndex: Z.FRONTEND, 
             }}
           />
           <div

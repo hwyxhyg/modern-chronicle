@@ -1,8 +1,8 @@
-import { useEffect, useRef } from 'react';
+﻿import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 import WeatheredOverlay from '../components/WeatheredOverlay';
-import SectionText, { type SectionTextProps } from '../components/SectionText';
+import SectionText,  { type SectionTextProps } from '../components/SectionText';
 import { Z_LAYERS } from '../constants/zIndex';
 
 import img1 from '../assets/end/img1.jpg';
@@ -13,22 +13,22 @@ import img5 from '../assets/end/img5.jpg';
 import img6 from '../assets/end/img6.jpg';
 import titleImg from '../assets/end/title.png';
 
-const END_IMAGES = [img1, img2, img3, img4, img5, img6];
+const END_IMAGES = [img1,  img2,  img3,  img4,  img5,  img6];
 
-// 文案占位：后续由文案填充 title/body
+// 文案占位:后续由文案填充 title/body
 const END_TEXT_PROPS: SectionTextProps = {
   body: [
-    `Afterword: Zhao Dachun is ninety-two years old now and his life was like that of the "Aguafiel"\nin China, ordinary yet extraordinary.`,
-    ` `,
-    `A chance encounter led us to his handwritten memoirs - pages that record more than\neighty years of trials and perseverance, mirroring the very arc of China’s modernization. `,
-    ` `,
-    `At his request, and driven by our own realization that these pages are far more than a\npersonal autobiography, we began the journey of digitizing this precious first-person\nnarrative, an intimate yet vivid record of a nation in transformation. `,
-    ` `,
-    `His story is never just the story of one individual; it reflects the emotional landscape of\nan entire generation of Chinese people. `,
-    ` `,
-    `We are deeply grateful for the trust shown by Mr. Zhao Dachun, his family, and their\nloved ones. We also extend our thanks to the relevant media and companies for their\ntechnical support. As Mr. Zhao himself wrote, "The warmth of the world is the true\nbond between people.`,
-  ],
-  style: {
+    `后记：赵大春老人如今已期颐之年(九十二岁)，他的人生如同中国大地上的\n一抹微光——平凡，却也极其不凡。`, 
+    ` `, 
+    `一次偶然的际遇，让我们读到了他亲笔写下的回忆录。那厚厚的一页页纸张，\n记录了八十多载风雨兼程与坚忍不拔，也如同一面镜子，严丝合缝地映照出\n中国现代化的漫长弧线。`, 
+    ` `, 
+    `承蒙老人嘱托，也深感这些文字早已超越了个人自传的范畴，我们倾注心力，\n开启了这项将第一人称珍贵叙事数字化的旅程。因为这不仅是一个人的私密记忆，\n更是一部关于国家转型期鲜活、细腻的时代侧写。`, 
+    ` `, 
+    `他的故事，从来都不只属于他一个人，它折射出的，是整整一代中国人的\n情感图景。`, 
+    ` `, 
+    `我们由衷地感谢赵大春先生、他的家人及亲属所给予的信任。同时，也向为本\n项目提供技术支持的媒体与合作单位致以诚挚的谢意。正如赵老自己在文章中\n所写的那样：`, 
+    `"人间温暖是真情"。`, 
+  ], style: {
     color: '#f5f5f5',
     left: '50%',
     top: '40%',
@@ -52,19 +52,18 @@ export default function End() {
       const groupHeight = firstGroup.getBoundingClientRect().height;
       if (!groupHeight) return;
 
-      // 一轮纵向滚动时长（秒），数值越小越快
+      // 一轮纵向滚动时长（秒）, 数值越小越快
       const duration = 20;
 
-      const tween = gsap.to(strip, {
+      const tween = gsap.to(strip,  {
         y: -groupHeight,
-        duration,
+        duration, 
         ease: 'none',
-        repeat: -1,
-        modifiers: {
+        repeat: -1, modifiers: {
           y: (value) => {
             const v = parseFloat(value);
             if (!Number.isFinite(v)) return value;
-            // 将位移始终限制在 [-groupHeight, 0) 区间，确保两组内容首尾无缝衔接且不会出现整块空白
+            // 将位移始终限制在 [-groupHeight,  0) 区间, 确保两组内容首尾无缝衔接且不会出现整块空白
             const wrapped = ((v + groupHeight) % groupHeight) - groupHeight;
             return `${wrapped}px`;
           },
@@ -110,7 +109,7 @@ export default function End() {
         tween.kill();
       }
       images.forEach((img) => {
-        // 清理事件监听，防止内存泄漏
+        // 清理事件监听, 防止内存泄漏
         img.replaceWith(img.cloneNode(true) as HTMLImageElement);
       });
     };
@@ -125,7 +124,7 @@ export default function End() {
         className="relative flex w-full h-full"
         style={{ zIndex: Z_LAYERS.CONTENT }}
       >
-        {/* 左侧 40%：纵向平铺照片并缓慢向上循环滚动 */}
+        {/* 左侧 40%:纵向平铺照片并缓慢向上循环滚动 */}
         <div
           className="relative h-full overflow-hidden"
           style={{
@@ -153,7 +152,7 @@ export default function End() {
           </div>
         </div>
 
-        {/* 右侧 60%：上 40% 为 title 图片，下 60% 为文字区域（带 WeatheredOverlay） */}
+        {/* 右侧 60%:上 40% 为 title 图片, 下 60% 为文字区域（带 WeatheredOverlay） */}
         <div
           className="relative h-full"
           style={{ flexBasis: '60%', maxWidth: '60%' }}
@@ -188,10 +187,10 @@ export default function End() {
                     color: '#f5f5f5',
                     fontSize: '0.9rem',
                     maxWidth: '80%',
+                    marginBottom: '2rem',
                   }}
                 >
-                  Zhao's handwriting: "The warmth of the world is the true bond
-                  between people."
+                  赵老亲笔题字："人间温暖是真情"
                 </p>
               </div>
             </div>

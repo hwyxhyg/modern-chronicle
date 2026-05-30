@@ -21,7 +21,7 @@ const START_TEXTS: SectionTextProps[] = [
   {
     justify: false,
     title:
-      'A Small Boat in a Great Tide\n One Man’s Journey Through\n China’s Modernization',
+      '时代浪潮中的一叶小舟\n一个普通中国人的现代化之旅',
     style: {
       left: '5vw',
       top: '10% ',
@@ -29,9 +29,9 @@ const START_TEXTS: SectionTextProps[] = [
   },
   {
     body: [
-      'Over the past seventy years, China has journeyed from poverty to its emergence as a global\npower.The world watches with curiosity, yet often knows little of the vast, stirring voyage\nof its modernization— a journey shaped not only by policies and statistics, but by the lives\nof ordinary people.',
+      '过去七十余载，中国历经了从积贫积弱到世界强国的漫长征程。世界满怀好奇地\n注视着这片土地，却往往对这场漫长、激荡的现代化远航知之甚少———这不仅是一段\n由政策和数据编织的宏大叙事，更是由无数普通人的人生所铸就的真实历史。',
       ' ',
-      'By chance, we came across the oral history of one such person: Zhao Dachun, an ordinary\nChinese man born in 1934. As we helped digitize his memories, we realized that the destinies\nof an individual and a nation are like a boat upon a river — rising and falling together, carried\nforward by the same currents of time. His story is a portrait of an ordinary life moving in\nquiet resonance with the fate of a country.',
+      '机缘巧合之下，我们读到了这样一位老人家的自传文章：赵大春，一个生于1934年的\n平凡中国人。在协助将其记忆数字化的过程中，我们愈发意识到个体与国家的命运\n正如江河上的一叶小舟——同呼吸，共起落，共同被时间的洪流推向前方。他的故事，\n是一个平凡生命与国家命运默默共鸣的静谧写照。',
     ],
     style: {
       left: '5vw',

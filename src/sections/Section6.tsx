@@ -1,4 +1,4 @@
-import backgroundImage from '../assets/section6/background.png';
+﻿import backgroundImage from '../assets/section6/background.png';
 import frontendImage from '../assets/section6/frontend.png';
 import { getSectionZLayers } from '../constants/zIndex';
 
@@ -12,29 +12,28 @@ const SECTION6_TEXTS: SectionTextProps[] = [
   {
     title: '1961-1977',
     body: [
-      `At the same time, the “[[_Up to the Mountains and Down to the Countryside_|The movement began in 1955 and peaked in the late 1960s, when national directives called for urban youth to be relocated to rural and frontier areas. Over 16 million young people were sent down, involving roughly one-tenth of China's urban population — one of the largest urban-to-rural migrations in modern history.]]”\nmovement unfolded. In 1969, the number of [[sent-down youth|Refers to the policy of transferring urban professionals, cadres, or intellectuals to rural areas for labor and ideological remolding — a common practice during political campaigns in Mao-era China.]] reached its\npeak, with 2.67 million young people relocated that year alone.`,
-      `This political movement led to a continuous decline in the number of college\nstudents since 1961. Although the Chinese people were lifted out of illiteracy,\nit remained difficult for them to access higher education.`,
-    ],
-    style: {
+      `这场政治运动导致自1961年起，全国在校大学生的数量持续下滑。\n尽管中国人在这段时期逐步告别了文盲，但对绝大多数人而言，\n接受高等教育的机会依然遥不可及。`, 
+    ], style: {
       left: '10vw',
       top: '10% ',
     },
-  },
-  {
-    body: 'In 1977, [[the national college entrance examination|China\'s nationwide standardized examination used to select students for higher education. Established in 1952, suspended in 1966, and reinstated in 1977, it serves as a central mechanism for merit-based selection and social mobility]]—suspended for a decade—\nwas restored, reaffirmed as the core mechanism for selecting talent and advancing\nmodernization. Its reinstatement legally and institutionally restored citizens’\nright to access education through fair competition.',
+  }, {
+    body: [
+      '1977年，中断了十载之久的全国统一高考正式恢复。那一年，全国约有272,971名\n学子被大学录取。这道窄窄的校门，永远改变了他们的人生，也重塑了中国的整个\n高等教育格局。',
+      '高考的恢复，在法律与制度层面上，重新赋予了每一位公民通过公平竞争接受教育\n的权利。'
+    ],
     style: {
       left: '145vw',
       bottom: '25% ',
       color: '#fff',
     },
-  },
-];
+  }];
 
 export default function Section6() {
   return (
     <div
       className="relative shrink-0 h-full"
-      style={{ width: SECTION6_WIDTH, maxWidth: SECTION6_WIDTH }}
+      style={{ width: SECTION6_WIDTH,  maxWidth: SECTION6_WIDTH }}
     >
       <div className="relative w-full h-full flex items-center">
         <div className="relative w-full">
@@ -52,7 +51,7 @@ export default function Section6() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.BACKGROUND,
+              zIndex: Z.BACKGROUND, 
             }}
           />
           <img
@@ -64,7 +63,7 @@ export default function Section6() {
             style={{
               width: '100%',
               height: 'auto',
-              zIndex: Z.FRONTEND,
+              zIndex: Z.FRONTEND, 
             }}
           />
           <div
