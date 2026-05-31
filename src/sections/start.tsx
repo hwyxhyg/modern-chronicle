@@ -21,7 +21,7 @@ const START_TEXTS: SectionTextProps[] = [
   {
     justify: false,
     title:
-      '时代浪潮中的一叶小舟\n一个普通中国人的现代化之旅',
+      '时代浪潮中的一叶小舟\n一个男人和他的一个世纪',
     style: {
       left: '5vw',
       top: '10% ',
